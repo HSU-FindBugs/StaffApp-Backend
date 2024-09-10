@@ -21,10 +21,12 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
+                    sh 'pwd' // 현재 작업 디렉토리 확인
                     sh './gradlew build'
                 }
             }
         }
+
         stage('Build And Deploy') {
             steps {
                 script {
