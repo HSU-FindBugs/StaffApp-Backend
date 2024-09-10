@@ -13,6 +13,11 @@ java {
 	}
 }
 
+bootJar {
+	archiveBaseName.set('StaffApp-Backend')  // JAR 파일 이름 설정
+	archiveVersion.set('0.0.1-SNAPSHOT')  // 버전 설정
+}
+
 
 configurations {
 	compileOnly {
