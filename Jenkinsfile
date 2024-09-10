@@ -4,6 +4,13 @@ pipeline {
         jdk "java"
         gradle "gradle"
     }
+    environment {
+            AWS_S3_BUCKET = "${AWS_S3_BUCKET}"
+            AWS_STACK_AUTO = "${AWS_STACK_AUTO}"
+            AWS_REGION = "${AWS_REGION}"
+            AWS_ACCESS_KEY = "${AWS_ACCESS_KEY}"
+            AWS_SECRET_KEY = "${AWS_SECRET_KEY}"
+    }
 
     stages {
         stage('Checkout') {
@@ -32,6 +39,11 @@ pipeline {
                 script {
                     sh """
                     java -jar \\
+                    -DAWS_ACCESS_KEY=\${AWS_ACCESS_KEY} \\
+                    -DAWS_SECRET_KEY=\${AWS_SECRET_KEY} \\
+                    -DAWS_REGION=\${AWS_REGION} \\
+                    -DAWS_STACK_AUTO=\${AWS_STACK_AUTO} \\
+                    -DAWS_S3_BUCKET=\${AWS_S3_BUCKET} \\
                     ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
                     """
                 }
