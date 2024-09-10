@@ -27,15 +27,16 @@ pipeline {
             }
         }
 
-        stage('Build And Deploy') {
-            steps {
-                script {
-                    sh """
-                    java -jar \\
-                    ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
-                    """
-                }
-            }
-        }
+        sstage('Build And Deploy') {
+             steps {
+                 script {
+                     sh """
+                     java -jar \\
+                     /var/lib/jenkins/workspace/bugFindProject/build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
+                     """
+                 }
+             }
+         }
+
     }
 }
