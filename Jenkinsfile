@@ -29,8 +29,8 @@ pipeline {
             steps {
                 script {
                     sh """
-                    java -jar \\
-                    ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
+                    sudo nohup java -jar \\
+                    ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
                     """
                 }
             }
