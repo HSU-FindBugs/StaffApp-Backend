@@ -1,6 +1,5 @@
 package com.findbugs.findbugstaff.domain;
 
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,29 +16,29 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Jacksonized
 @Getter
-public class Member {
+public class Visit extends BaseEntity{
 
     @Id
     @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "visit_id")
     private Long id;
 
-    private String name;
-    private String email;
-    private String phoneNumber;
+    private LocalDateTime visitedAt;
 
-    @Embedded
-    private Address address;
+    /**
+     * 정기 점검, 방역 후 점검, 긴급 요청 방역
+     */
+    private String visitPurpose;
 
-    private String membership;
-
-    private LocalDateTime registerAt;
-
-    private LocalDateTime expiresAt;
+    private String visitComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id")
     private Staff manager;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 
 
