@@ -16,11 +16,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
         // 사용자 반환
         Optional<Member> findById(Long id);
 
-        // 매니저가 담당하는 사용자 반환
-        @Query("select m from Member m where m.manager = :manager")
-        List<Member> findByManager(@Param("manager") Staff manager);
-
-        // 매니저가 담당하는 사용자의 수 반환
-        @Query("select count(m) from Member m where m.manager = :manager")
-        Long countByManager(@Param("manager") Staff manager);
 }
