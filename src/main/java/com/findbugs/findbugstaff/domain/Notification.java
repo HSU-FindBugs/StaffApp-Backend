@@ -21,6 +21,8 @@ public class Notification {
     @Column(name = "notification_id")
     private Long id;
 
+    private String NotificationProfileImg;
+
     private String title;
 
     private String content;
