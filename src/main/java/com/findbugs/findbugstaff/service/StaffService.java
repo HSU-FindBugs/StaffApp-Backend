@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StaffService {
 
     private final StaffReader staffReader;
@@ -19,16 +20,14 @@ public class StaffService {
     /**
      * 직원 프로필 조회 서비스
      */
-    @Transactional(readOnly = true)
-    public Staff getStaffProfile(Long id){
-        return staffReader.getStaffProfile(id);
+    public Staff getStaff(Long id){
+        return staffReader.getStaff(id);
     }
 
     /**
      * 직원 담당 고객 수 조회 서비스
      */
-    @Transactional(readOnly = true)
-    public Long getCountMembersManagedByStaff(Long id){
-        return staffFinder.getMembersManagedByStaff(id);
+    public Long getMemberInCharge(Long id){
+        return staffFinder.getMemberInCharge(id);
     }
 }

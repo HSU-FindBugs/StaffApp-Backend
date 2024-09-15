@@ -14,7 +14,7 @@ public class StaffFinder {
 
     private final StaffRepository staffRepository;
 
-    public Long getMembersManagedByStaff(Long id){
+    public Long getMemberInCharge(Long id){
 
         if(!staffRepository.existsById(id)){
             throw new EntityNotFoundException("Staff with id " + id + " not found");

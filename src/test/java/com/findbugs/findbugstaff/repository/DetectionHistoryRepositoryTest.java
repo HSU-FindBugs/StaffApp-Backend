@@ -85,7 +85,7 @@ class DetectionHistoryRepositoryTest {
     }
 
     @Test
-    @DisplayName("특정 일자와 벌레에 대한 발견 수 통계 조회")
+    @DisplayName("특정_일자와 _벌레에_대한_발견_수_통계_조회")
     void givenBugAndDate_whenCountDetectedBugByLocalDate_thenReturnCount() {
         // Given
         LocalDateTime date = LocalDateTime.of(2024, 9, 1, 0, 0);

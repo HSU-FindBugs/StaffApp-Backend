@@ -28,12 +28,12 @@ public class MainPageAPI {
     @GetMapping("main/{id}")
     public ResponseEntity<MainPageResponseDto> getMainPage(@PathVariable("id") Long id) {
 
-        Staff staff = staffService.getStaffProfile(id);
+        Staff staff = staffService.getStaff(id);
         Bug bug = detectedBugStatsService.getMostDetectedBug();
 
         MainPageResponseDto responseDto = mainPageMapper.toMainPageResponseDto(
                 staff,
-                staffService.getCountMembersManagedByStaff(id),
+                staffService.getMemberInCharge(id),
                 bug,
                 detectedBugStatsService.getDetectedBugStatsMessage(bug.getId()),
                 notificationService.getNotifications(0)

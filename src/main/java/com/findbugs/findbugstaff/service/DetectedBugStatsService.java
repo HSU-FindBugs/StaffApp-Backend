@@ -29,7 +29,7 @@ public class DetectedBugStatsService {
 
         DetectedBugStats detectedBugStats = getDetectedBugsStats(bugId);
 
-        return String.format("어제 발견된 %s의 수는 총 %d 마리입니다!",
+        return String.format("어제 발견된 %s의 수는 총 %d마리입니다!",
                 detectedBugStats.getBug().getName(), detectedBugStats.getDetectedCount());
     }
 }
