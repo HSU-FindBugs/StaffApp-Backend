@@ -1,50 +1,49 @@
 package com.findbugs.findbugstaff.service;
 
 import com.findbugs.findbugstaff.domain.Member;
-import com.findbugs.findbugstaff.domain.Staff;
-import com.findbugs.findbugstaff.dto.MemberDto;
+import com.findbugs.findbugstaff.dto.Member.MemberDto;
+import com.findbugs.findbugstaff.dto.Member.MemberListDto;
+import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
+import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
 import com.findbugs.findbugstaff.implement.MemberRegister;
 import com.findbugs.findbugstaff.implement.MemberSearcher;
 import com.findbugs.findbugstaff.implement.MemberUpdater;
-import com.findbugs.findbugstaff.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-@Transactional
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberSearcher memberSearcher;
     private final MemberRegister memberRegister;
-
     private final MemberUpdater memberUpdater;
-    @Autowired
-    public MemberService(MemberSearcher memberSearcher, MemberRegister memberRegister, MemberUpdater memberUpdater) {
-        this.memberSearcher = memberSearcher;
-        this.memberRegister = memberRegister;
-        this.memberUpdater = memberUpdater;
+
+
+    private MemberListDto convertToMemberListDto(Member member) {
+        return MemberListDto.builder()
+                .name(member.getName()).recentVisit(member.getRecentVisit())
+                .address(member.getAddress()).build();
     }
 
     private MemberDto convertToMemberDto(Member member) {
-        MemberDto dto = new MemberDto();
-        dto.setId(member.getId());
-        dto.setDisplayName(member.getName());
-        dto.setAddress(member.getAddress());
-        dto.setRecentVisit(member.getRecentVisit());
-        dto.setPhoneNumber(member.getPhoneNumber());
-        return dto;
+        return MemberDto.builder()
+                .id(member.getId()).address(member.getAddress())
+                .displayName(member.getName()).phoneNumber(member.getPhoneNumber())
+                .recentVisit(member.getRecentVisit()).build();
     }
 
-    public List<MemberDto> getAllMembers(int page,int size){
-        return memberSearcher.getAllMembers(page, size).stream()
-                .map(this::convertToMemberDto)
+    // MemberDto -> MemberListDto로 수정 24-09-15 18:55
+    public List<MemberListDto> getAllMembers(int page){
+        return memberSearcher.getAllMembers(page).stream()
+                .map(this::convertToMemberListDto)
                 .toList();
     }
 
@@ -54,8 +53,8 @@ public class MemberService {
                 .toList();
     }
     // 스태프로부터 멤버를 등록
-    public void registerMember(Member member, Long staffId){
-        memberRegister.registerMember(member,staffId);
+    public void registerMember(MemberRegisterRequestDto memberRegisterRequestDto){
+        memberRegister.registerMember(memberRegisterRequestDto);
     }
 
     public MemberDto getMemberById(Long memberId) {
@@ -67,8 +66,8 @@ public class MemberService {
         throw new EntityNotFoundException("와 엔티티 따잇하는 재미" + memberId);
     }
 
-    public void updateMember(Long staffId,Long memberId,Member updateInfo){
-        memberUpdater.memberUpdate(staffId,memberId,updateInfo);
+    public void updateMember(MemberUpdateRequestDto memberUpdateRequestDto){
+        memberUpdater.memberUpdate(memberUpdateRequestDto);
     }
 
 }
