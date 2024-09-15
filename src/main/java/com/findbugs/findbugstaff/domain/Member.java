@@ -2,10 +2,7 @@ package com.findbugs.findbugstaff.domain;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -30,8 +27,12 @@ public class Member {
 
     @Embedded
     private Address address;
+    
+    // 멤버쉽은 x개월 단위
+    private Long membership;
 
-    private String membership;
+    // 방문 일자 업데이트
+    private LocalDateTime recentVisit;
 
     private LocalDateTime registerAt;
 
@@ -41,6 +42,19 @@ public class Member {
     @JoinColumn(name = "staff_id")
     private Staff manager;
 
+    // 이름 업데이트 메서드
+    public void updateName(String newName) {
+        this.name = newName;
+    }
 
+    // 전화번호 업데이트 메서드
+    public void updatePhoneNumber(String newPhoneNumber) {
+        this.phoneNumber = newPhoneNumber;
+    }
+
+    // 주소 업데이트 메서드
+    public void updateAddress(Address newAddress) {
+        this.address = newAddress;
+    }
 
 }
