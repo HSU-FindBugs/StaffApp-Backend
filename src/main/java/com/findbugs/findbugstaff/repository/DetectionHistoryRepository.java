@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -18,7 +19,7 @@ public interface DetectionHistoryRepository extends JpaRepository<DetectionHisto
     List<DetectionHistory> findHistoryByMember(@Param("member") Member member);
 
     // 통계 : 특정 일자 벌레 발견 통계 조회
-    @Query("select count(dh) from DetectionHistory dh where dh.bug.id = :bug and dh.detectedAt = :date")
-    Long countDetectedBugByLocalDate(@Param("bugId") Long id, @Param("date") LocalDate date);
+    @Query("select count(dh) from DetectionHistory dh where dh.bug.id = :bugId and dh.detectedAt = :date")
+    Long countDetectedBugByLocalDate(@Param("bugId") Long id, @Param("date") LocalDateTime date);
 
 }

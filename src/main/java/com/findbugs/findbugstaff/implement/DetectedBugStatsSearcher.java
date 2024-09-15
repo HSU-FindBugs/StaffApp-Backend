@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -28,14 +29,14 @@ public class DetectedBugStatsSearcher {
     public void calculateStats(){
 
         List<Bug> bugList = bugRepository.findAll();
-        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
 
         for(Bug bug : bugList){
             Long detectedCount = detectionHistoryRepository.countDetectedBugByLocalDate(bug.getId(), yesterday);
 
             detectedBugsStatsRepository.save(
                     DetectedBugStats.builder()
-                            .calculatedDate(yesterday)
+                            .calculatedDate(yesterday.toLocalDate())
                             .bug(bug)
                             .detectedCount(detectedCount)
                             .build()

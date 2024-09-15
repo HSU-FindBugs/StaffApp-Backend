@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface DetectedBugStatsRepository extends JpaRepository<DetectedBugStats, Long> {
 
+    // 해당 Repository 에 대한 테스트는 서비스 테스트에서 겸하여 진행
+
     // 특정 일자 기반 탐지된 벌레의 수 반환
     @EntityGraph(attributePaths = {"bug"})
     @Query("select dbs from DetectedBugStats dbs where dbs.bug.id = :bugId and dbs.calculatedDate = :date")

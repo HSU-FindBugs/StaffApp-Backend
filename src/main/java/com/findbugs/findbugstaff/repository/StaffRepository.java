@@ -1,5 +1,6 @@
 package com.findbugs.findbugstaff.repository;
 
+import com.findbugs.findbugstaff.domain.Address;
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.domain.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,27 +14,21 @@ import java.util.Optional;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
-    // 직원 반환
-    Optional<Staff> findById(Long id);
-
-    // 직원의 존재 여부 반환
-    boolean existsById(Long id);
-
     // 직원 프로필 이미지 반환
     @Query("select s.profileUrl from Staff s where s.id = :staffId")
-    Optional<String> findProfileById(Long id);
+    Optional<String> findProfileById(@Param("staffId") Long id);
 
     // 직원 직급 반환
     @Query("select s.position from Staff s where s.id = :staffId")
-    Optional<String> findPositionById(Long id);
+    Optional<String> findPositionById(@Param("staffId")Long id);
 
     // 직원 전화번호 반환
     @Query("select s.phoneNumber from Staff s where s.id = :staffId")
-    Optional<String> findPhoneById(Long id);
+    Optional<String> findPhoneById(@Param("staffId")Long id);
 
     // 직원 담당 주소 반환
     @Query("select s.territory from Staff s where s.id = :staffId")
-    Optional<String> findTerritoryById(@Param("staffId") Long id);
+    Optional<Address> findTerritoryById(@Param("staffId") Long id);
 
     // 직원이 담당하는 사용자 반환
     @Query("select m from Member m where m.manager = :manager")

@@ -9,7 +9,4 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-        // 사용자 반환
-        Optional<Member> findById(Long id);
-
 }

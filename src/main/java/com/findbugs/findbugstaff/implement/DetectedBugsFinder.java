@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
@@ -18,18 +18,18 @@ public class DetectedBugsFinder {
 
     // 어제 기준 탐지 된 벌레의 수 조회
     public Long countDetectedBugByYesterday(Long bugId){
-        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         return detectionHistoryRepository.countDetectedBugByLocalDate(bugId, yesterday);
     }
 
     // 오늘 기준 탐지 된 벌레의 수 조회
     public Long countDetectedBugByToday(Long bugId){
-        LocalDate today = LocalDate.now();
+        LocalDateTime today = LocalDateTime.now();
         return detectionHistoryRepository.countDetectedBugByLocalDate(bugId, today);
     }
 
     // 특정 일자 기준 탐지 된 벌레의 수 조회
-    public Long countDetectedBugByLocalDate(Long bugId, LocalDate localDate){
+    public Long countDetectedBugByLocalDate(Long bugId, LocalDateTime localDate){
         return detectionHistoryRepository.countDetectedBugByLocalDate(bugId, localDate);
     }
 

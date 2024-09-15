@@ -24,6 +24,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    private String profileUrl;
     private String name;
     private String email;
     private String phoneNumber;

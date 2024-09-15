@@ -1,5 +1,6 @@
 package com.findbugs.findbugstaff.service;
 
+import com.findbugs.findbugstaff.domain.Bug;
 import com.findbugs.findbugstaff.domain.DetectedBugStats;
 import com.findbugs.findbugstaff.implement.DetectedBugStatsSearcher;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,10 @@ public class DetectedBugStatsService {
         // 예외 처리 필요
         return detectedBugStatsSearcher
                 .getStatsForYesterday(bugId);
+    }
+
+    public Bug getMostDetectedBug(){
+        return detectedBugStatsSearcher.getMostDetectedBug();
     }
 
     public String getDetectedBugStatsMessage(Long bugId){

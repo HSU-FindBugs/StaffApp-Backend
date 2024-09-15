@@ -14,14 +14,14 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder
 @Jacksonized
 @Getter
-public class Notification {
+public class Notification extends BaseEntity{
 
     @Id
     @GeneratedValue
     @Column(name = "notification_id")
     private Long id;
 
-    private String NotificationProfileImg;
+    private String profileUrl;
 
     private String title;
 
