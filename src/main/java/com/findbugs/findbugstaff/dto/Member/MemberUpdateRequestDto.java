@@ -6,8 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 public class MemberUpdateRequestDto {
     @Positive(message = "staff아이디는 0초과인 양수여야합니다.")
     public Long staffId;

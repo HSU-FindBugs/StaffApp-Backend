@@ -5,9 +5,9 @@ import com.findbugs.findbugstaff.dto.Member.MemberDto;
 import com.findbugs.findbugstaff.dto.Member.MemberListDto;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
-import com.findbugs.findbugstaff.implement.MemberRegister;
-import com.findbugs.findbugstaff.implement.MemberSearcher;
-import com.findbugs.findbugstaff.implement.MemberUpdater;
+import com.findbugs.findbugstaff.implement.Member.MemberRegister;
+import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
+import com.findbugs.findbugstaff.implement.Member.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,6 @@ public class MemberService {
     private final MemberSearcher memberSearcher;
     private final MemberRegister memberRegister;
     private final MemberUpdater memberUpdater;
-
 
     private MemberListDto convertToMemberListDto(Member member) {
         return MemberListDto.builder()
@@ -52,6 +51,14 @@ public class MemberService {
                 .map(this::convertToMemberDto)
                 .toList();
     }
+
+    public List<String> recentSearchData(Long staffId){
+        return memberSearcher.getRecentSearchData(staffId);
+    }
+
+
+
+
     // 스태프로부터 멤버를 등록
     public void registerMember(MemberRegisterRequestDto memberRegisterRequestDto){
         memberRegister.registerMember(memberRegisterRequestDto);

@@ -3,11 +3,12 @@ package com.findbugs.findbugstaff.dto.Member;
 import com.findbugs.findbugstaff.domain.Address;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
+@SuperBuilder
 public class MemberDto {
     public Long id;
     public String displayName;
