@@ -10,6 +10,7 @@ pipeline {
             AWS_REGION = "${AWS_REGION}"
             AWS_ACCESS_KEY = "${AWS_ACCESS_KEY}"
             AWS_SECRET_KEY = "${AWS_SECRET_KEY}"
+            ELASTIC_CACHE_URI = "${ELASTIC_CACHE_URI}"
     }
 
     stages {
@@ -44,6 +45,7 @@ pipeline {
                     -DAWS_REGION=\${AWS_REGION} \\
                     -DAWS_STACK_AUTO=\${AWS_STACK_AUTO} \\
                     -DAWS_S3_BUCKET=\${AWS_S3_BUCKET} \\
+                    -DAWS_ELASTIC_CACHE_URI=\${ELASTIC_CACHE_URI} \\
                     ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
                     """
                 }

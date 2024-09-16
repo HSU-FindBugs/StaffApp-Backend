@@ -38,5 +38,4 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
     @Query("select count(m) from Member m where m.manager.id = :managerId")
     Long countByManager(@Param("managerId") Long id);
 
-
 }
