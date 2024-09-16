@@ -1,13 +1,11 @@
 package com.findbugs.findbugstaff.controller;
 
-import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.Member.MemberDto;
 import com.findbugs.findbugstaff.dto.Member.MemberListDto;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
 import com.findbugs.findbugstaff.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,20 +31,23 @@ public class MemberController {
         List<MemberDto> searchResult = memberService.searchMemberData(name,staffId);
         return ResponseEntity.ok().body(searchResult);
     }
+    // 최근 검색어에 대한 최대 10개의 정보 반환 -> 각 staffId에 맞는
+    @GetMapping("/recent/{staffId}")
+    public ResponseEntity<List<String>> getRecentSearcheData(@PathVariable Long staffId) {
+        List<String> getRecentSearchs = memberService.recentSearchData(staffId);
+
+        return ResponseEntity.ok(getRecentSearchs);
+    }
+
+
 
     // 회원 등록 -> Staff에 종속
     @PostMapping
     public ResponseEntity<String> registerMember(@RequestBody MemberRegisterRequestDto memberRegisterRequestDto) {
-        try {
-            memberService.registerMember(memberRegisterRequestDto);
-            return ResponseEntity.ok("성공");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("입력 오류: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace(); // 로그 기록
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메인 서버 내에서 알 수 없는 오류가 발생했습니다.");
-        }
+        memberService.registerMember(memberRegisterRequestDto);
+        return ResponseEntity.ok("성공");
     }
+
 
     // 회원 프로필 정보 확인
     @GetMapping("/{member_id}")

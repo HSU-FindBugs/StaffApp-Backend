@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: FindBugs-Staff
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MY_DB_URL}
+    username: ${MY_DB_USERNAME}
+    password: ${MY_DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+  data:
+    redis:
+      host: ${ELASTIC_CACHE_URI}
+      port: 6379
+
+server:
+  port: 8079
+
+AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+AWS_REGION: ${AWS_REGION}
+AWS_S3_BUCKET: ${AWS_S3_BUCKET}

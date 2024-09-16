@@ -1,4 +1,4 @@
-package com.findbugs.findbugstaff.implement;
+package com.findbugs.findbugstaff.implement.Member;
 
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.domain.Staff;
