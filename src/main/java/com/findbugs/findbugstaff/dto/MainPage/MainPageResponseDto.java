@@ -22,7 +22,7 @@ public class MainPageResponseDto {
     public String staffProfileUrl;
     public String staffName; // 직원 + 포지션 ex) 박종범 컨설턴트
     public String staffTerritory;
-    public String countMemberManagedByStaff;
+    public Long countMemberManagedByStaff;
 
     // 벌레 정보
     public String bugName;

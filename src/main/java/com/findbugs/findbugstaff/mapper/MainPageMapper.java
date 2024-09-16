@@ -17,7 +17,6 @@ public interface MainPageMapper {
 
     MainPageMapper INSTANCE = Mappers.getMapper(MainPageMapper.class);
 
-
     @Mapping(source = "staff.profileUrl", target = "staffProfileUrl")
     @Mapping(source = "staff", target = "staffName", qualifiedByName = "concatNameAndPosition")
     @Mapping(source = "staff", target = "staffTerritory", qualifiedByName = "concatRegion")
@@ -60,5 +59,4 @@ public interface MainPageMapper {
             builder.append(value);
         }
     }
-
 }
