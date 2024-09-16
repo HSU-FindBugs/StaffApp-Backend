@@ -26,6 +26,8 @@ public class Staff extends BaseEntity{
 
     private String position;
 
+    private String profileUrl;
+
     private String phoneNumber;
 
     @Embedded

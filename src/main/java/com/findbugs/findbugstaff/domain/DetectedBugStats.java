@@ -8,27 +8,26 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import java.time.LocalDate;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
 @Jacksonized
 @Getter
-public class Notification extends BaseEntity{
+public class DetectedBugStats {
 
     @Id
     @GeneratedValue
-    @Column(name = "notification_id")
+    @Column(name = "detected_bug_stats_id")
     private Long id;
 
-    private String profileUrl;
-
-    private String title;
-
-    private String content;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "staff_id")
-    private Staff staff;
+    @JoinColumn(name = "bug_id")
+    private Bug bug;
 
+    private Long detectedCount;
+
+    private LocalDate calculatedDate;
 }

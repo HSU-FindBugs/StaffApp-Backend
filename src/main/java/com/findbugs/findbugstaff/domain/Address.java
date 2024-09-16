@@ -3,9 +3,13 @@ package com.findbugs.findbugstaff.domain;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 @Embeddable
 @NoArgsConstructor
+@SuperBuilder
+@Jacksonized
 @Getter
 public class Address {
     private String region_1depth;   // 지역명 1
