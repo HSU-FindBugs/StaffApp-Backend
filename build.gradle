@@ -47,7 +47,8 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+	// mysql 테스트
+	testImplementation 'mysql:mysql-connector-java:8.0.33'
 	// Mockito 추가
 	testImplementation 'org.mockito:mockito-core:4.11.0'
 	testImplementation 'org.mockito:mockito-junit-jupiter:4.11.0'
