@@ -1,10 +1,7 @@
 package com.findbugs.findbugstaff.dto.Member;
 
 import com.findbugs.findbugstaff.domain.Address;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -25,6 +22,6 @@ public class MemberUpdateRequestDto {
     @Positive(message = "멤버쉽은 0초과인 양수여야합니다.")
     public Long memberShip;
 
-    @NotEmpty(message = "주소를 입력해주세요!")
+    @NotNull(message = "주소를 입력해주세요!")
     public Address address;
 }

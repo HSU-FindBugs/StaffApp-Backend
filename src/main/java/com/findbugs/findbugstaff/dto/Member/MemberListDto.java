@@ -6,12 +6,10 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 @Data
 @SuperBuilder
 public class MemberListDto {
-    public String name;
-
-    public Address address;
-
-    public LocalDateTime recentVisit;
+    public CopyOnWriteArrayList<MemberDto> memberLists;
 }

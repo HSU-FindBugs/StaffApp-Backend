@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class MemberDto {
     public Long id;
-    public String displayName;
+    public String name;
     public Address address;
     public LocalDateTime recentVisit;
     public String phoneNumber;
