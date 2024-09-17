@@ -1,10 +1,7 @@
 package com.findbugs.findbugstaff.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -39,8 +36,10 @@ public class DetectionHistory extends BaseEntity{
     @JoinColumn(name = "bug_id")
     private Bug bug;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "visit_id")
     private Visit visit;
+
 
 }

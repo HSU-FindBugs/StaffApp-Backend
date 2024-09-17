@@ -9,6 +9,8 @@ import com.findbugs.findbugstaff.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class MemberController {
     private final MemberService memberService;
 
     // 회원 목록 조회
+    // List<MemberListDto> -> 객체 구성 {Dto}
     @GetMapping
     public ResponseEntity<List<MemberListDto>> getAllMembers(int page) {
         List<MemberListDto> members = memberService.getAllMembers(page);
@@ -37,6 +40,7 @@ public class MemberController {
     // 회원 등록 -> Staff에 종속
     @PostMapping
     public ResponseEntity<String> registerMember(@RequestBody MemberRegisterRequestDto memberRegisterRequestDto) {
+
         try {
             memberService.registerMember(memberRegisterRequestDto);
             return ResponseEntity.ok("성공");

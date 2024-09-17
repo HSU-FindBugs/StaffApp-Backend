@@ -5,6 +5,7 @@ import com.findbugs.findbugstaff.dto.Member.MemberDto;
 import com.findbugs.findbugstaff.dto.Member.MemberListDto;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
+import com.findbugs.findbugstaff.implement.MemberFinder;
 import com.findbugs.findbugstaff.implement.MemberRegister;
 import com.findbugs.findbugstaff.implement.MemberSearcher;
 import com.findbugs.findbugstaff.implement.MemberUpdater;
@@ -25,6 +26,7 @@ public class MemberService {
     private final MemberSearcher memberSearcher;
     private final MemberRegister memberRegister;
     private final MemberUpdater memberUpdater;
+    private final MemberFinder memberFinder;
 
 
     private MemberListDto convertToMemberListDto(Member member) {
@@ -40,7 +42,7 @@ public class MemberService {
                 .recentVisit(member.getRecentVisit()).build();
     }
 
-    // MemberDto -> MemberListDto로 수정 24-09-15 18:55
+
     public List<MemberListDto> getAllMembers(int page){
         return memberSearcher.getAllMembers(page).stream()
                 .map(this::convertToMemberListDto)
@@ -57,8 +59,9 @@ public class MemberService {
         memberRegister.registerMember(memberRegisterRequestDto);
     }
 
+    //
     public MemberDto getMemberById(Long memberId) {
-        Optional<Member> memberOptional = memberSearcher.memberSearcher(memberId);
+        Optional<Member> memberOptional = memberSearcher.findById(memberId);
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
             return convertToMemberDto(member);
@@ -68,6 +71,21 @@ public class MemberService {
 
     public void updateMember(MemberUpdateRequestDto memberUpdateRequestDto){
         memberUpdater.memberUpdate(memberUpdateRequestDto);
+    }
+
+    // 사용자 정보를 반환하는 서비스
+    public Member getById(Long id){
+        return memberFinder.getById(id);
+    }
+
+    // 사용자의 남은 멤버쉽 일수를 반환하는 서비스
+    public String getRemainingMembershipDays(Long id){
+        return "D-" + memberFinder.getRemainingMembershipDays(id);
+    }
+
+    // 사용자 특이사항을 수정 / 저장하는 서비스
+    public void setNote(Long memberId, String updateNote){
+        memberUpdater.noteUpdate(memberId, updateNote);
     }
 
 }

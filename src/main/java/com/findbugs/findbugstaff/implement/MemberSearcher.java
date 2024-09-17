@@ -46,7 +46,8 @@ public class MemberSearcher {
         listOperations.trim(key,0,9);
     }
 
-    public Optional<Member> memberSearcher(Long memberId) {
-        return memberRepository.findById(memberId); }
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 
 }

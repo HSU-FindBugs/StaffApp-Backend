@@ -12,7 +12,7 @@ public class StaffReader {
 
     private final StaffRepository staffRepository;
 
-    public Staff getStaff(Long id) {
+    public Staff getById(Long id) {
         return staffRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Staff with id " + id + " not found"));
     }
 

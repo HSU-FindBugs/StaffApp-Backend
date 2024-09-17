@@ -21,7 +21,7 @@ public class StaffService {
      * 직원 프로필 조회 서비스
      */
     public Staff getStaff(Long id){
-        return staffReader.getStaff(id);
+        return staffReader.getById(id);
     }
 
     /**
