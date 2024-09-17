@@ -44,7 +44,7 @@ public class MemberManagePageAPI {
         List<Member> searchResult = memberService.searchMemberData(name, staffId);
         List<MemberDto> memberDtos = searchResult.stream()
                 .map(memberMapper::toMemberDto)
-                .collect(Collectors.toList());
+                .toList();
 
         // MemberListDto 생성
         MemberListDto memberListDto = MemberListDto.builder()
@@ -89,5 +89,10 @@ public class MemberManagePageAPI {
         return ResponseEntity.ok().body("Success");
     }
 
-
+    // 회원 정보 삭제
+    @DeleteMapping
+    public ResponseEntity<String> deleteMember(@PathVariable("staff_id") Long staffId, @PathVariable("member_id") Long memberId){
+        memberService.deleteMember(staffId,memberId);
+        return ResponseEntity.ok().body("Success");
+    }
 }

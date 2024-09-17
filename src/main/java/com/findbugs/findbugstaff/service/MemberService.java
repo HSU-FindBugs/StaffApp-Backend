@@ -3,6 +3,7 @@ package com.findbugs.findbugstaff.service;
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
+import com.findbugs.findbugstaff.implement.Member.MemberDeleter;
 import com.findbugs.findbugstaff.implement.Member.MemberRegister;
 import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
 import com.findbugs.findbugstaff.implement.Member.MemberUpdater;
@@ -25,6 +26,7 @@ public class MemberService {
     private final MemberSearcher memberSearcher;
     private final MemberRegister memberRegister;
     private final MemberUpdater memberUpdater;
+    private final MemberDeleter memberDeleter;
 
     public List<Member> getTenMember(int page) {
         return memberSearcher.getAllMembers(page);
@@ -50,8 +52,10 @@ public class MemberService {
     public void updateMember(MemberUpdateRequestDto memberUpdateRequestDto) {
         memberUpdater.memberUpdate(memberUpdateRequestDto);
     }
-
-    // 해충 기록 표기
+    // 멤버 삭제
+    public void deleteMember(Long staffId ,Long memberId) {
+        memberDeleter.deleteMember(staffId,memberId);
+    }
 
 
 
