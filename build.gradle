@@ -30,6 +30,12 @@ repositories {
 
 dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+	// validator 추가
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+
+	// aws s3 의존성 추가
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
