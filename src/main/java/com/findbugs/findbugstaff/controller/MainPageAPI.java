@@ -1,5 +1,6 @@
 package com.findbugs.findbugstaff.controller;
 
+import com.findbugs.findbugstaff.controller.swagger.MainPageSwaggerInfo;
 import com.findbugs.findbugstaff.domain.Bug;
 import com.findbugs.findbugstaff.domain.Staff;
 import com.findbugs.findbugstaff.dto.MainPage.MainPageResponseDto;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class MainPageAPI {
+public class MainPageAPI implements MainPageSwaggerInfo {
 
     private final DetectedBugStatsService detectedBugStatsService;
     private final StaffService staffService;
@@ -25,7 +26,7 @@ public class MainPageAPI {
     private final MainPageMapper mainPageMapper;
 
 
-
+    @Override
     @GetMapping("main/{id}")
     public ResponseEntity<MainPageResponseDto> getMainPage(@PathVariable("id") Long id) {
 

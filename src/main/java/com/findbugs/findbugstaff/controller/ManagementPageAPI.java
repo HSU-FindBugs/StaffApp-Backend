@@ -1,5 +1,6 @@
 package com.findbugs.findbugstaff.controller;
 
+import com.findbugs.findbugstaff.controller.swagger.ManagementPageSwaggerInfo;
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.Member.*;
 import com.findbugs.findbugstaff.mapper.ManagementPage.ManagementPageMapper;
@@ -12,12 +13,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class ManagementPageAPI {
+public class ManagementPageAPI implements ManagementPageSwaggerInfo {
 
     private final MemberService memberService;
     private final MemberMapper memberMapper;
@@ -29,6 +28,7 @@ public class ManagementPageAPI {
      * @param page 입력 받고자 하는 페이지 (ex) 10 입력시 10~19번째 사용자 반환)
      * @return ManagementPageMemberListDto 사용자 내역 반환
      */
+    @Override
     @GetMapping("management/{staff_id}/{page}")
     public ResponseEntity<ManagementPageResponseDto> getAllByStaffId(
             @PathVariable("staff_id") Long staffId,
@@ -44,6 +44,7 @@ public class ManagementPageAPI {
      * @param memberName 사용자 이름
      * @return ManagementPageResponseDto 사용자 내역 반환
      */
+    @Override
     @GetMapping("management/search/{staff_id}/{member_name}")
     public ResponseEntity<ManagementPageResponseDto> searchMembers(
             @PathVariable("staff_id") Long staffId,
@@ -59,6 +60,7 @@ public class ManagementPageAPI {
      * @param staffId 매니저 ID
      * @return ManagementPageRecentSearchResponseDto 최근 검색 내역 Dto
      */
+    @Override
     @GetMapping("management/recent/{staff_id}")
     public ResponseEntity<ManagementPageRecentSearchResponseDto> getRecentSearchData(
             @PathVariable("staff_id") Long staffId
@@ -71,9 +73,10 @@ public class ManagementPageAPI {
 
     /**
      * 고객관리_고객찾기 API - 고객 등록
-     * @param memberRegisterRequestDto
-     * @return
+     * @param memberRegisterRequestDto 등록 내역 반환
+     * @return ManagementPageSaveDto 저장 여부 반환
      */
+    @Override
     @PostMapping
     public ResponseEntity<ManagementPageSaveDto> registerMember(
             @Validated @RequestBody MemberRegisterRequestDto memberRegisterRequestDto,
@@ -95,6 +98,7 @@ public class ManagementPageAPI {
     }
 
     // 회원 프로필 정보 확인
+    @Override
     @GetMapping("/{member_id}")
     public ResponseEntity<ManagementPageMemberDto> getMemberProfile(@PathVariable("member_id") Long memberId) {
         Member member = memberService.getMemberById(memberId);
@@ -103,6 +107,7 @@ public class ManagementPageAPI {
     }
 
     // 회원 정보 업데이트
+    @Override
     @PutMapping
     public ResponseEntity<String> updateMember(
             @RequestBody MemberUpdateRequestDto memberUpdateRequestDto

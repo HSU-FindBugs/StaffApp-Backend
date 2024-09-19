@@ -1,8 +1,8 @@
 package com.findbugs.findbugstaff.controller;
 
+import com.findbugs.findbugstaff.controller.swagger.ManagementProfilePageSwaggerInfo;
 import com.findbugs.findbugstaff.domain.DetectionHistory;
 import com.findbugs.findbugstaff.domain.Member;
-import com.findbugs.findbugstaff.domain.Visit;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileSaveResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileUpdateNoteRequestDto;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class VisitAPI {
+public class ManagementProfilePageAPI implements ManagementProfilePageSwaggerInfo {
 
     private final MemberService memberService;
     private final VisitService visitService;
@@ -26,7 +26,14 @@ public class VisitAPI {
 
     private final ManagementProfilePageMapper managementProfilePageMapper;
 
-    @GetMapping("{staff_id}/visit/{member_id}")
+    /**
+     * 고객관리_고객정보확인 - 방문등록 이전 고객정보확인을 위한 API
+     * @param staffId 매니저 ID
+     * @param memberId 고객 ID
+     * @return ManagementProfileResponseDto 고객 정보 Dto
+     */
+    @Override
+    @GetMapping("management/visit/{staff_id}/{member_id}")
     public ResponseEntity<ManagementProfileResponseDto> getMemberProfile(
             @PathVariable("staff_id") Long staffId,
             @PathVariable("member_id") Long memberId
@@ -44,6 +51,14 @@ public class VisitAPI {
         return ResponseEntity.ok(dto);
     }
 
+
+    /**
+     * 고객관리_고객정보확인 - 방문등록을 위한 API
+     * @param staffId 매니저 ID
+     * @param memberId 고객 ID
+     * @return ManagementProfileSaveResponseDto true/false
+     */
+    @Override
     @PostMapping("management/visit/{staff_id}/{member_id}")
     public ResponseEntity<ManagementProfileSaveResponseDto> save(
             @PathVariable("staff_id") Long staffId,
@@ -55,6 +70,14 @@ public class VisitAPI {
                 ManagementProfileSaveResponseDto.builder().isSaved(true).build());
     }
 
+    /**
+     * 고객관리_고객정보확인 - 고객 특이사항 수정을 위한 API
+     * @param staffId 매니저 ID
+     * @param memberId 사용자 ID
+     * @param managementProfileUpdateNoteRequestDto 수정한 고객 특이사항
+     * @return ManagementProfileSaveResponseDto 저장 성공 여부 true/false
+     */
+    @Override
     @PostMapping("management/visit/{staff_id}/{member_id}/memo")
     public ResponseEntity<ManagementProfileSaveResponseDto> saveMemo(
             @PathVariable("staff_id") Long staffId,
