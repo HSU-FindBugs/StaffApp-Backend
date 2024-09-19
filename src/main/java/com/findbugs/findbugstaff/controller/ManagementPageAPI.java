@@ -104,7 +104,9 @@ public class ManagementPageAPI {
 
     // 회원 정보 업데이트
     @PutMapping
-    public ResponseEntity<String> updateMember(@RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
+    public ResponseEntity<String> updateMember(
+            @RequestBody MemberUpdateRequestDto memberUpdateRequestDto
+    ) {
         memberService.updateMember(memberUpdateRequestDto);
         return ResponseEntity.ok().body("Success");
     }

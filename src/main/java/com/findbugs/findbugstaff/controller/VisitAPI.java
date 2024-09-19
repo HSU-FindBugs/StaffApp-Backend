@@ -44,7 +44,7 @@ public class VisitAPI {
         return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("{staff_id}/visit/{member_id}")
+    @PostMapping("management/visit/{staff_id}/{member_id}")
     public ResponseEntity<ManagementProfileSaveResponseDto> save(
             @PathVariable("staff_id") Long staffId,
             @PathVariable("member_id") Long memberId
@@ -55,7 +55,7 @@ public class VisitAPI {
                 ManagementProfileSaveResponseDto.builder().isSaved(true).build());
     }
 
-    @PostMapping("{staff_id}/visit/{member_id}/memo")
+    @PostMapping("management/visit/{staff_id}/{member_id}/memo")
     public ResponseEntity<ManagementProfileSaveResponseDto> saveMemo(
             @PathVariable("staff_id") Long staffId,
             @PathVariable("member_id") Long memberId,
