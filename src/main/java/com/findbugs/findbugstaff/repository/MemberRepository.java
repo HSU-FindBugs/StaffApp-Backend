@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -14,6 +15,9 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member,Long> {
     // 동명이인이 있을 수 있으므로 List로 받습니다.
     List<Member> findByName(String name);
+
+    @Query("select m from Member m where m.manager = :staffId and m.name = :name")
+    List<Member> findByNameAndStaffId(@Param("staffId") Long staffId, @Param("name") String name);
 
     // staffId 와 Page 를 기반으로 사용자 10명의 정보를 반환 + 방문일자 순으로 오름차순 정렬
     @Query("select m from Member m where m.manager = :staffId order by m.recentVisit asc")

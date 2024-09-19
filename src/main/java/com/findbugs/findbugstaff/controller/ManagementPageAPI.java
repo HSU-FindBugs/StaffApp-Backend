@@ -28,9 +28,9 @@ public class ManagementPageAPI {
 
 
     /**
-     * 고객 관리 페이지에서 고객 목록을 조회하기 위한 API
+     * 고객관리_API (고객목록 조회)
      * @param page 입력 받고자 하는 페이지 (ex) 10 입력시 10~19번째 사용자 반환)
-     * @return ManagementPageMemberListDto
+     * @return ManagementPageMemberListDto 사용자 내역 반환
      */
     @GetMapping("management/{staff_id}/{page}")
     public ResponseEntity<ManagementPageResponseDto> getAllByStaffId(
@@ -41,21 +41,19 @@ public class ManagementPageAPI {
         return ResponseEntity.ok().body(managementPageMapper.toManagementPageResponseDto(members));
     }
 
-
-    // 회원 정보 검색 (동명이인 처리를 위한 List)
-    @GetMapping("/search")
-    public ResponseEntity<ManagementPageResponseDto> searchMembers(@RequestParam String name, @RequestParam Long staffId) {
-        List<Member> searchResult = memberService.searchMemberData(name, staffId);
-        List<ManagementPageMemberDto> memberDtos = searchResult.stream()
-                .map(memberMapper::toMemberDto)
-                .collect(Collectors.toList());
-
-        // MemberListDto 생성
-        ManagementPageResponseDto memberListDto = ManagementPageResponseDto.builder()
-                .managementPageMemberDtoList(new CopyOnWriteArrayList<>(memberDtos))
-                .build();
-
-        return ResponseEntity.ok().body(memberListDto);
+    /**
+     * 고객관리_고객찾기 페이지 API
+     * @param staffId 매니저 ID
+     * @param memberName 사용자 이름
+     * @return ManagementPageResponseDto 사용자 내역 반환
+     */
+    @GetMapping("management/search/{staff_id}/{member_name}")
+    public ResponseEntity<ManagementPageResponseDto> searchMembers(
+            @PathVariable("staff_id") Long staffId,
+            @PathVariable("member_name") String memberName
+    ) {
+        List<Member> members = memberService.searchMemberData(memberName, staffId);
+        return ResponseEntity.ok().body(managementPageMapper.toManagementPageResponseDto(members));
     }
 
 
