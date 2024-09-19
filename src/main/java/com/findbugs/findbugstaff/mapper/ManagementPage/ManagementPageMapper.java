@@ -2,6 +2,7 @@ package com.findbugs.findbugstaff.mapper.ManagementPage;
 
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.Member.ManagementPageMemberDto;
+import com.findbugs.findbugstaff.dto.Member.ManagementPageRecentSearchResponseDto;
 import com.findbugs.findbugstaff.dto.Member.ManagementPageResponseDto;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,12 @@ public class ManagementPageMapper {
                 .address(member.getAddress())
                 .phoneNumber(member.getPhoneNumber())
                 .recentVisit(member.getRecentVisit())
+                .build();
+    }
+
+    public ManagementPageRecentSearchResponseDto toManagementPageRecentSearchResponseDto(List<String> memberList){
+        return ManagementPageRecentSearchResponseDto.builder()
+                .recentSearchResults(memberList)
                 .build();
     }
 

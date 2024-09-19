@@ -1,10 +1,7 @@
 package com.findbugs.findbugstaff.controller;
 
 import com.findbugs.findbugstaff.domain.Member;
-import com.findbugs.findbugstaff.dto.Member.ManagementPageMemberDto;
-import com.findbugs.findbugstaff.dto.Member.ManagementPageResponseDto;
-import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
-import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
+import com.findbugs.findbugstaff.dto.Member.*;
 import com.findbugs.findbugstaff.mapper.ManagementPage.ManagementPageMapper;
 import com.findbugs.findbugstaff.mapper.MemberMapper;
 import com.findbugs.findbugstaff.service.MemberService;
@@ -57,11 +54,19 @@ public class ManagementPageAPI {
     }
 
 
-    // 최근 검색어에 대한 최대 10개의 정보 반환 -> redist
-    @GetMapping("/recent/{staffId}")
-    public ResponseEntity<List<String>> getRecentSearchData(@PathVariable Long staffId) {
-        List<String> recentSearches = memberService.recentSearchData(staffId);
-        return ResponseEntity.ok().body(recentSearches);
+    /**
+     * 고객관리_고객찾기 페이지 API - 최근 검색한 고객
+     * @param staffId 매니저 ID
+     * @return ManagementPageRecentSearchResponseDto 최근 검색 내역 Dto
+     */
+    @GetMapping("management/recent/{staff_id}")
+    public ResponseEntity<ManagementPageRecentSearchResponseDto> getRecentSearchData(
+            @PathVariable("staff_id") Long staffId
+    ) {
+        return ResponseEntity.ok().body(managementPageMapper
+                .toManagementPageRecentSearchResponseDto(
+                        memberService.recentSearchData(staffId)
+                ));
     }
 
     // 회원 등록
