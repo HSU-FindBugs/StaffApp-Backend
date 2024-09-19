@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MainPageAPI {
 
-   private final DetectedBugStatsService detectedBugStatsService;
-   private final StaffService staffService;
-   private final NotificationService notificationService;
+    private final DetectedBugStatsService detectedBugStatsService;
+    private final StaffService staffService;
+    private final NotificationService notificationService;
+    private final MainPageMapper mainPageMapper;
 
-   private final MainPageMapper mainPageMapper;
+
 
     @GetMapping("main/{id}")
     public ResponseEntity<MainPageResponseDto> getMainPage(@PathVariable("id") Long id) {

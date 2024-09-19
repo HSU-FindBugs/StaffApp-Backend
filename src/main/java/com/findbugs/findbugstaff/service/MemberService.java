@@ -3,17 +3,14 @@ package com.findbugs.findbugstaff.service;
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
+import com.findbugs.findbugstaff.implement.Member.MemberFinder;
 import com.findbugs.findbugstaff.implement.Member.MemberRegister;
 import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
 import com.findbugs.findbugstaff.implement.Member.MemberUpdater;
-import com.findbugs.findbugstaff.implement.Member.MemberFinder;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +25,14 @@ public class MemberService {
     private final MemberUpdater memberUpdater;
     private final MemberFinder memberFinder;
 
-    public List<Member> getTenMember(int page) {
+    public List<Member> get10Member(int page) {
         return memberSearcher.getAllMembers(page);
+    }
+
+
+    // 스태프 ID와 Page 정보를 기반으로 총 10명의 member 정보를 반환한다.
+    public List<Member> get10ByStaffId(Long staffId, int page) {
+        return memberFinder.find10ByStaffId(staffId, page);
     }
 
     public List<Member> searchMemberData(String name, Long staffId) {

@@ -1,10 +1,11 @@
 package com.findbugs.findbugstaff.controller;
 
 import com.findbugs.findbugstaff.domain.Member;
-import com.findbugs.findbugstaff.dto.Member.MemberDto;
-import com.findbugs.findbugstaff.dto.Member.MemberListDto;
+import com.findbugs.findbugstaff.dto.Member.ManagementPageMemberDto;
+import com.findbugs.findbugstaff.dto.Member.ManagementPageResponseDto;
 import com.findbugs.findbugstaff.dto.Member.MemberRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
+import com.findbugs.findbugstaff.mapper.ManagementPage.ManagementPageMapper;
 import com.findbugs.findbugstaff.mapper.MemberMapper;
 import com.findbugs.findbugstaff.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -18,37 +19,40 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/manage")
 @RequiredArgsConstructor
-public class MemberManagePageAPI {
+public class ManagementPageAPI {
 
     private final MemberService memberService;
     private final MemberMapper memberMapper;
-    @GetMapping
-    public ResponseEntity<MemberListDto> getAll(int page) {
-        List<Member> members = memberService.getTenMember(page);
-        CopyOnWriteArrayList<MemberDto> memberDtos = members.stream()
-                .map(memberMapper::toMemberDto)
-                .collect(Collectors.toCollection(CopyOnWriteArrayList::new));
+    private final ManagementPageMapper managementPageMapper;
 
-        MemberListDto memberListDto = MemberListDto.builder()
-                .memberLists(memberDtos)
-                .build();
 
-        return ResponseEntity.ok().body(memberListDto);
+    /**
+     * 고객 관리 페이지에서 고객 목록을 조회하기 위한 API
+     * @param page 입력 받고자 하는 페이지 (ex) 10 입력시 10~19번째 사용자 반환)
+     * @return ManagementPageMemberListDto
+     */
+    @GetMapping("management/{staff_id}/{page}")
+    public ResponseEntity<ManagementPageResponseDto> getAllByStaffId(
+            @PathVariable("staff_id") Long staffId,
+            @PathVariable("page") int page
+    ) {
+        List<Member> members = memberService.get10ByStaffId(staffId, page);
+        return ResponseEntity.ok().body(managementPageMapper.toManagementPageResponseDto(members));
     }
+
 
     // 회원 정보 검색 (동명이인 처리를 위한 List)
     @GetMapping("/search")
-    public ResponseEntity<MemberListDto> searchMembers(@RequestParam String name, @RequestParam Long staffId) {
+    public ResponseEntity<ManagementPageResponseDto> searchMembers(@RequestParam String name, @RequestParam Long staffId) {
         List<Member> searchResult = memberService.searchMemberData(name, staffId);
-        List<MemberDto> memberDtos = searchResult.stream()
+        List<ManagementPageMemberDto> memberDtos = searchResult.stream()
                 .map(memberMapper::toMemberDto)
                 .collect(Collectors.toList());
 
         // MemberListDto 생성
-        MemberListDto memberListDto = MemberListDto.builder()
-                .memberLists(new CopyOnWriteArrayList<>(memberDtos))
+        ManagementPageResponseDto memberListDto = ManagementPageResponseDto.builder()
+                .managementPageMemberDtoList(new CopyOnWriteArrayList<>(memberDtos))
                 .build();
 
         return ResponseEntity.ok().body(memberListDto);
@@ -76,9 +80,9 @@ public class MemberManagePageAPI {
 
     // 회원 프로필 정보 확인
     @GetMapping("/{member_id}")
-    public ResponseEntity<MemberDto> getMemberProfile(@PathVariable("member_id") Long memberId) {
+    public ResponseEntity<ManagementPageMemberDto> getMemberProfile(@PathVariable("member_id") Long memberId) {
         Member member = memberService.getMemberById(memberId);
-        MemberDto memberDto = memberMapper.toMemberDto(member);
+        ManagementPageMemberDto memberDto = memberMapper.toMemberDto(member);
         return ResponseEntity.ok().body(memberDto);
     }
 

@@ -2,6 +2,7 @@ package com.findbugs.findbugstaff.implement;
 
 import com.findbugs.findbugstaff.domain.DetectionHistory;
 import com.findbugs.findbugstaff.domain.Visit;
+import com.findbugs.findbugstaff.implement.Member.MemberFinder;
 import com.findbugs.findbugstaff.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -4,7 +4,6 @@ import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.domain.Staff;
 import com.findbugs.findbugstaff.dto.Bug.BugDetectionAlertDto;
 import com.findbugs.findbugstaff.dto.Bug.BugDetectionRequestDto;
-import com.findbugs.findbugstaff.dto.Member.MemberListDto;
 import com.findbugs.findbugstaff.repository.MemberRepository;
 import com.findbugs.findbugstaff.sse.SseEmitters;
 import lombok.RequiredArgsConstructor;
