@@ -57,4 +57,8 @@ public class MemberSearcher {
     public Optional<Member> memberSearcher(Long memberId) {
         return memberRepository.findById(memberId); }
 
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
+
 }

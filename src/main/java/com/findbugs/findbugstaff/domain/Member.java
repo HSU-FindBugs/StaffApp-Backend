@@ -25,6 +25,7 @@ public class Member {
     private String name;
     private String email;
     private String phoneNumber;
+    private String note;
 
     @Embedded
     private Address address;
@@ -56,6 +57,10 @@ public class Member {
     // 주소 업데이트 메서드
     public void updateAddress(Address newAddress) {
         this.address = newAddress;
+    }
+
+    public void updateNote(String newNote){
+        this.note = newNote;
     }
 
 }

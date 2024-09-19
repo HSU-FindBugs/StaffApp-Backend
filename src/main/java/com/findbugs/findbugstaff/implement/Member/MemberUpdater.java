@@ -7,10 +7,13 @@ import com.findbugs.findbugstaff.repository.MemberRepository;
 import com.findbugs.findbugstaff.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
 public class MemberUpdater {
+
+    private final MemberFinder memberFinder;
 
     private final MemberRepository memberRepository;
     private final StaffRepository staffRepository;
@@ -27,5 +30,13 @@ public class MemberUpdater {
             updateMember.updatePhoneNumber(memberUpdateRequestDto.getPhoneNumber());
         }
     }
+
+    @Transactional
+    public void noteUpdate(Long memberId, String note){
+        Member member = memberFinder.getById(memberId);
+        member.updateNote(note);
+        memberRepository.save(member);
+    }
+
 
 }

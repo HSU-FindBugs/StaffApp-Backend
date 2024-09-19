@@ -6,6 +6,7 @@ import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
 import com.findbugs.findbugstaff.implement.Member.MemberRegister;
 import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
 import com.findbugs.findbugstaff.implement.Member.MemberUpdater;
+import com.findbugs.findbugstaff.implement.Member.MemberFinder;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class MemberService {
     private final MemberSearcher memberSearcher;
     private final MemberRegister memberRegister;
     private final MemberUpdater memberUpdater;
+    private final MemberFinder memberFinder;
 
     public List<Member> getTenMember(int page) {
         return memberSearcher.getAllMembers(page);
@@ -51,8 +53,19 @@ public class MemberService {
         memberUpdater.memberUpdate(memberUpdateRequestDto);
     }
 
-    // 해충 기록 표기
+    // 사용자 정보를 반환하는 서비스
+    public Member getById(Long id){
+        return memberFinder.getById(id);
+    }
 
+    // 사용자의 남은 멤버쉽 일수를 반환하는 서비스
+    public String getRemainingMembershipDays(Long id){
+        return "D-" + memberFinder.getRemainingMembershipDays(id);
+    }
 
+    // 사용자 특이사항을 수정 / 저장하는 서비스
+    public void setNote(Long memberId, String updateNote){
+        memberUpdater.noteUpdate(memberId, updateNote);
+    }
 
 }

@@ -34,7 +34,7 @@ class StaffServiceTest {
     void givenStaffId_whenFindStaff_thenReturnStaff(){
         //given
         Staff staff = Staff.builder().name("박종범").build();
-        when(staffReader.getStaff(1L)).thenReturn(staff);
+        when(staffReader.getById(1L)).thenReturn(staff);
 
         //when
         Staff target = staffService.getStaff(1L);
