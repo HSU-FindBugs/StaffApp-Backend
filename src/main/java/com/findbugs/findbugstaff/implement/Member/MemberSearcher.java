@@ -1,4 +1,4 @@
-package com.findbugs.findbugstaff.implement;
+package com.findbugs.findbugstaff.implement.Member;
 
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.repository.MemberRepository;
@@ -45,6 +45,17 @@ public class MemberSearcher {
         // 최대 10개의 정보만 저장
         listOperations.trim(key,0,9);
     }
+
+    public List<String> getRecentSearchData(Long staffId){
+        // 스테프 id에 맞는 최근 검색어 서치
+        String key = "recent_search" + staffId;
+        List<String> recentSearches = redisTemplate.opsForList().range(key, 0, -1);
+
+        return recentSearches;
+    }
+
+    public Optional<Member> memberSearcher(Long memberId) {
+        return memberRepository.findById(memberId); }
 
     public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);

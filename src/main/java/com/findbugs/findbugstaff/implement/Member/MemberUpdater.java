@@ -1,4 +1,4 @@
-package com.findbugs.findbugstaff.implement;
+package com.findbugs.findbugstaff.implement.Member;
 
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.domain.Staff;
@@ -6,11 +6,9 @@ import com.findbugs.findbugstaff.dto.Member.MemberUpdateRequestDto;
 import com.findbugs.findbugstaff.repository.MemberRepository;
 import com.findbugs.findbugstaff.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class MemberUpdater {

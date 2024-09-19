@@ -3,14 +3,13 @@ package com.findbugs.findbugstaff.dto.Member;
 import com.findbugs.findbugstaff.domain.Address;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 @Data
-@Builder
+@SuperBuilder
 public class MemberListDto {
-    public String name;
-
-    public Address address;
-
-    public LocalDateTime recentVisit;
+    public CopyOnWriteArrayList<MemberDto> memberLists;
 }

@@ -1,18 +1,17 @@
-package com.findbugs.findbugstaff.dto.Member;
+package com.findbugs.findbugstaff.dto.Bug;
 
 import com.findbugs.findbugstaff.domain.Address;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-
 @Data
 @SuperBuilder
-public class MemberDto {
-    public Long id;
+public class BugDetectionAlertDto {
+
     public String name;
+
     public Address address;
-    public LocalDateTime recentVisit;
-    public String phoneNumber;
+
+    public LocalDateTime recentFindTime;
 }

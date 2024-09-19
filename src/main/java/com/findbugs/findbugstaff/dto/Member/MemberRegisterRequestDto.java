@@ -2,14 +2,17 @@ package com.findbugs.findbugstaff.dto.Member;
 
 import com.findbugs.findbugstaff.domain.Address;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
+@NoArgsConstructor // 기본 생성자
+@AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자
 public class MemberRegisterRequestDto {
     @Positive(message = "staff아이디는 0초과인 양수여야합니다.")
     public Long staffId;
@@ -22,7 +25,7 @@ public class MemberRegisterRequestDto {
     public String phoneNumber;
     @Positive(message = "멤버쉽은 0초과인 양수여야합니다.")
     public Long memberShip;
-    @NotEmpty(message = "주소를 입력해주세요!")
+    @NotNull(message = "주소를 입력해주세요!")
     public Address address;
 
 }
