@@ -69,16 +69,29 @@ public class ManagementPageAPI {
                 ));
     }
 
-    // 회원 등록
+    /**
+     * 고객관리_고객찾기 API - 고객 등록
+     * @param memberRegisterRequestDto
+     * @return
+     */
     @PostMapping
-    public ResponseEntity<String> registerMember(@Validated @RequestBody MemberRegisterRequestDto memberRegisterRequestDto,
-                                                 BindingResult bindingResult) {
+    public ResponseEntity<ManagementPageSaveDto> registerMember(
+            @Validated @RequestBody MemberRegisterRequestDto memberRegisterRequestDto,
+            BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("요청 양식에 맞추어 다시 작성해주세요");
+            return ResponseEntity.badRequest().body(
+                    ManagementPageSaveDto.builder()
+                            .isChecked(false)
+                            .build());
         }
 
         memberService.registerMember(memberRegisterRequestDto);
-        return ResponseEntity.ok().body("성공적으로 등록 되었습니다.");
+        return ResponseEntity.ok().body(
+                ManagementPageSaveDto.builder()
+                        .isChecked(true)
+                        .build()
+        );
     }
 
     // 회원 프로필 정보 확인
