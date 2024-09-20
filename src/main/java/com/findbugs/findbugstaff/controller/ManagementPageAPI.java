@@ -77,7 +77,7 @@ public class ManagementPageAPI implements ManagementPageSwaggerInfo {
      * @return ManagementPageSaveDto 저장 여부 반환
      */
     @Override
-    @PostMapping
+    @PostMapping("management/register")
     public ResponseEntity<ManagementPageSaveDto> registerMember(
             @Validated @RequestBody MemberRegisterRequestDto memberRegisterRequestDto,
             BindingResult bindingResult
@@ -97,18 +97,26 @@ public class ManagementPageAPI implements ManagementPageSwaggerInfo {
         );
     }
 
-    // 회원 프로필 정보 확인
+    /**
+     * 개인 회원 정보 조회
+     * @param memberId 회원 ID
+     * @return ManagementPageMemberDto 개인 회원 정보
+     */
     @Override
-    @GetMapping("/{member_id}")
+    @GetMapping("management/{member_id}")
     public ResponseEntity<ManagementPageMemberDto> getMemberProfile(@PathVariable("member_id") Long memberId) {
         Member member = memberService.getMemberById(memberId);
         ManagementPageMemberDto memberDto = memberMapper.toMemberDto(member);
         return ResponseEntity.ok().body(memberDto);
     }
 
-    // 회원 정보 업데이트
+    /**
+     * 회원 정보 업데이트
+     * @param memberUpdateRequestDto 업데이트를 위햔 Dto
+     * @return String ok
+     */
     @Override
-    @PutMapping
+    @PutMapping("management/update")
     public ResponseEntity<String> updateMember(
             @RequestBody MemberUpdateRequestDto memberUpdateRequestDto
     ) {
