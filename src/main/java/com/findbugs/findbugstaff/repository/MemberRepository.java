@@ -20,6 +20,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     List<Member> findByNameAndStaffId(@Param("staffId") Long staffId, @Param("name") String name);
 
     // staffId 와 Page 를 기반으로 사용자 10명의 정보를 반환 + 방문일자 순으로 오름차순 정렬
-    @Query("select m from Member m where m.manager = :staffId order by m.recentVisit asc")
+    @Query("select m from Member m where m.manager.id = :staffId order by m.recentVisit asc")
     Slice<Member> findAllByStaffId(Long staffId, Pageable pageable);
 }
