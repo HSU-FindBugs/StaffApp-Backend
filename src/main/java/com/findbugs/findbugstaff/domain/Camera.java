@@ -21,9 +21,9 @@ public class Camera {
     @Column(name = "camera_id")
     private Long id;
 
-    private Long cameraSerialId;
+    private String serialId;
 
-    private String cameraName;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
