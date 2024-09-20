@@ -2,6 +2,7 @@ package com.findbugs.findbugstaff.repository;
 
 import com.findbugs.findbugstaff.domain.DetectionHistory;
 import com.findbugs.findbugstaff.domain.Member;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,7 @@ public interface DetectionHistoryRepository extends JpaRepository<DetectionHisto
     // 방문 처리 된 감지 영상 중 가장 최신 감지 영상 조회 :테스트 반영 필요
     @EntityGraph(attributePaths = {"visit"})
     @Query("select dh from DetectionHistory dh where dh.member.id = :memberId and dh.visit is not null")
-    Optional<DetectionHistory> findRecentVisitedByMemberId(@Param("memberId") Long memberId, Pageable pageable);
+    Page<DetectionHistory> findRecentVisitedByMemberId(@Param("memberId") Long memberId, Pageable pageable);
 
     // 방문 처리 되지 않은 감지 영상 모두를 조회
     @Query("select dh from DetectionHistory dh where dh.member.id = :memberId and dh.visit is null")

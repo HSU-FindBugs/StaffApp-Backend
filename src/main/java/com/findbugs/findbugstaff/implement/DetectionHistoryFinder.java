@@ -24,7 +24,8 @@ public class DetectionHistoryFinder {
     // 방문 처리 된 기록 중 가장 최신 기록 1개를 조회하는 기능
     public DetectionHistory findRecentVisitedDetectionHistory(Long memberId) {
         Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "visitedAt"));
-        return detectionHistoryRepository.findRecentVisitedByMemberId(memberId, pageable).orElseThrow(NoSuchElementException::new);
+        return detectionHistoryRepository.findRecentVisitedByMemberId(memberId, pageable)
+                .getContent().stream().findFirst().orElseThrow(NoSuchElementException::new);
     }
 
     // 방문 처리 되지 않은 기록 모두를 조회하는 기능
