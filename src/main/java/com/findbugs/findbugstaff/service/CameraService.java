@@ -5,7 +5,7 @@ import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.camera.CameraRegisterRequestDto;
 import com.findbugs.findbugstaff.implement.Camera.CameraFinder;
 import com.findbugs.findbugstaff.implement.Camera.CameraRegister;
-import com.findbugs.findbugstaff.implement.MemberFinder;
+import com.findbugs.findbugstaff.implement.Member.MemberFinder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
