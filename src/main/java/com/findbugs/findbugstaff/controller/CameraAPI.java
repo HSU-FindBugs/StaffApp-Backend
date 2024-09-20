@@ -1,6 +1,7 @@
 package com.findbugs.findbugstaff.controller;
 
 
+import com.findbugs.findbugstaff.controller.swagger.CameraSwaggerInfo;
 import com.findbugs.findbugstaff.domain.Camera;
 import com.findbugs.findbugstaff.domain.Member;
 import com.findbugs.findbugstaff.dto.camera.CameraListResponseDto;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CameraAPI {
+public class CameraAPI implements CameraSwaggerInfo {
 
     private final MemberFinder memberFinder;
     private final CameraRegister cameraRegister;
@@ -27,6 +28,12 @@ public class CameraAPI {
 
     private final CameraMapper cameraMapper;
 
+    /**
+     * 카메라 등록을 위한 API
+     * @param cameraRegisterRequestDto 카메라 등록 정보
+     * @return CameraSaveResponseDto 카메라 등록 여부 (true/false)
+     */
+    @Override
     @PostMapping("camera")
     public ResponseEntity<CameraSaveResponseDto> register(
             @ModelAttribute CameraRegisterRequestDto cameraRegisterRequestDto
@@ -58,6 +65,12 @@ public class CameraAPI {
         );
     }
 
+    /**
+     * 카메라 조회 - 리스트 형식 반환
+     * @param memberId 사용자 ID
+     * @return CameraListResponseDto 카메라 리스트 형식 반환
+     */
+    @Override
     @GetMapping("camera/{member_id}")
     public ResponseEntity<CameraListResponseDto> get(
             @PathVariable("member_id") Long memberId
@@ -67,10 +80,5 @@ public class CameraAPI {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
-
-    public void delete(){
-
-    }
-
 
 }
