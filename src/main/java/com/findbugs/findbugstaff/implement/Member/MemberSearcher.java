@@ -28,6 +28,7 @@ public class MemberSearcher {
     }
 
     public List<Member> searchMemberData(String name,Long staffId){
+
         // 멤버 검색
         List<Member> members = memberRepository.findByName(name);
 
