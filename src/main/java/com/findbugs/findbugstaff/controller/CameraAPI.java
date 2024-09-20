@@ -3,18 +3,19 @@ package com.findbugs.findbugstaff.controller;
 
 import com.findbugs.findbugstaff.domain.Camera;
 import com.findbugs.findbugstaff.domain.Member;
+import com.findbugs.findbugstaff.dto.camera.CameraListResponseDto;
 import com.findbugs.findbugstaff.dto.camera.CameraRegisterRequestDto;
 import com.findbugs.findbugstaff.dto.camera.CameraSaveResponseDto;
 import com.findbugs.findbugstaff.implement.Camera.CameraFinder;
 import com.findbugs.findbugstaff.implement.Camera.CameraRegister;
 import com.findbugs.findbugstaff.implement.MemberFinder;
+import com.findbugs.findbugstaff.mapper.camera.CameraMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +24,8 @@ public class CameraAPI {
     private final MemberFinder memberFinder;
     private final CameraRegister cameraRegister;
     private final CameraFinder cameraFinder;
+
+    private final CameraMapper cameraMapper;
 
     @PostMapping("camera")
     public ResponseEntity<CameraSaveResponseDto> register(
@@ -55,8 +58,14 @@ public class CameraAPI {
         );
     }
 
-    public void get(){
+    @GetMapping("camera/{member_id}")
+    public ResponseEntity<CameraListResponseDto> get(
+            @PathVariable("member_id") Long memberId
+    ){
+        List<Camera> cameraList = cameraFinder.findAllByMember(memberFinder.getById(memberId));
+        CameraListResponseDto responseDto = cameraMapper.toCameraListResponseDto(cameraList);
 
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
     public void delete(){
