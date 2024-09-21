@@ -1,5 +1,6 @@
 package com.findbugs.findbugstaff.controller.swagger;
 
+import com.findbugs.findbugstaff.dto.ManagementProfilePage.DetectionHistoryResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileSaveResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileUpdateNoteRequestDto;
@@ -35,4 +36,12 @@ public interface ManagementProfilePageSwaggerInfo {
             @PathVariable("member_id") Long memberId,
             @RequestBody ManagementProfileUpdateNoteRequestDto managementProfileUpdateNoteRequestDto
     );
+
+    @Operation(summary = "고객 감지영상 조회", description = "방문 처리되지 않은 벌레 감지 이미지를 반환합니다.")
+    @PostMapping("management/visit/{staff_id}/{member_id}/history")
+    public ResponseEntity<DetectionHistoryResponseDto> getMemberDetectionHistory(
+            @PathVariable("staff_id") Long staffId,
+            @PathVariable("member_id") Long memberId
+    );
+
 }

@@ -33,4 +33,5 @@ public class DetectionHistoryFinder {
         return detectionHistoryRepository.findUnVisitedByMemberId(memberId);
     }
 
+
 }

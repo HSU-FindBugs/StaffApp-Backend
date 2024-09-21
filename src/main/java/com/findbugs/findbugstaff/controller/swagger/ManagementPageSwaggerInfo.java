@@ -52,8 +52,8 @@ public interface ManagementPageSwaggerInfo {
     );
 
     @Operation(
-            summary = "(재검토 필요) 회원 프로필 정보 확인",
-            description = "특정 회원의 프로필 정보를 반환"
+            summary = "회원 프로필 정보 조회",
+            description = "회원 프로필을 수정하기 전, 특정 회원의 프로필 정보를 반환"
     )
     @GetMapping("management/{member_id}")
     ResponseEntity<ManagementPageMemberDto> getMemberProfile(
@@ -61,8 +61,8 @@ public interface ManagementPageSwaggerInfo {
     );
 
     @Operation(
-            summary = "(재검토 필요) 회원 정보 업데이트",
-            description = "특정 회원의 정보를 업데이트"
+            summary = "회원 정보 업데이트",
+            description = "해당 회원의 정보를 업데이트"
     )
     @PutMapping("management")
     ResponseEntity<String> updateMember(
