@@ -26,7 +26,6 @@ public class MemberRegister {
 
             // Member 객체 생성
             Member registerMemberData = Member.builder()
-                    .id(1L) 
                     .name(memberRegisterRequestDto.getName())
                     .email(memberRegisterRequestDto.getEmail())
                     .address(memberRegisterRequestDto.getAddress())

@@ -43,14 +43,22 @@ public class ManagementProfilePageMapper {
     public ManagementProfilePageVisitDto toManagementPageVisitDto(
             DetectionHistory recentVisitHistory
     ){
+
         Visit visit = recentVisitHistory.getVisit();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd");
+
+        String formattedDate = visit.getVisitedAt().format(formatter);
+        String title = formattedDate + " 방문";
+
         return ManagementProfilePageVisitDto.builder()
                 .visitId(visit.getId())
+                .title(title)
                 .visitComment(visit.getVisitComment())
                 .visitedAt(visit.getVisitedAt().toString())
                 .detectedImgUrl(recentVisitHistory.getImageUrl())
                 .build();
     }
+
 
     public DetectionHistoryResponseDto toDetectionHistoryResponseDto(List<DetectionHistory> detectionHistoryList) {
 

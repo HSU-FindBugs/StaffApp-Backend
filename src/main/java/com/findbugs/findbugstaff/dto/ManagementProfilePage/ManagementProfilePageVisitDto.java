@@ -15,6 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @Setter
 public class ManagementProfilePageVisitDto {
     public Long visitId;
+    public String title;
     public String visitedAt;
     public String visitComment;
     public String detectedImgUrl;

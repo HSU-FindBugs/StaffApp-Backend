@@ -7,6 +7,7 @@ import com.findbugs.findbugstaff.mapper.ManagementPage.ManagementPageMapper;
 import com.findbugs.findbugstaff.mapper.MemberMapper;
 import com.findbugs.findbugstaff.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ManagementPageAPI implements ManagementPageSwaggerInfo {
@@ -83,6 +85,7 @@ public class ManagementPageAPI implements ManagementPageSwaggerInfo {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
+            log.info("검증 결과 : 바인딩 오류");
             return ResponseEntity.badRequest().body(
                     ManagementPageSaveDto.builder()
                             .isChecked(false)
