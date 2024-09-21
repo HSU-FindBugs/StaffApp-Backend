@@ -43,6 +43,7 @@ public class MemberService {
         return memberSearcher.getRecentSearchData(staffId);
     }
 
+    @Transactional
     public void registerMember(MemberRegisterRequestDto memberRegisterRequestDto) {
         memberRegister.registerMember(memberRegisterRequestDto);
     }
@@ -52,6 +53,7 @@ public class MemberService {
         return getSinglemember.orElseThrow(() -> new EntityNotFoundException("해당 id 멤버는 존재하지 않습니다. " + memberId));
     }
 
+    @Transactional
     public void updateMember(MemberUpdateRequestDto memberUpdateRequestDto) {
         memberUpdater.memberUpdate(memberUpdateRequestDto);
     }
