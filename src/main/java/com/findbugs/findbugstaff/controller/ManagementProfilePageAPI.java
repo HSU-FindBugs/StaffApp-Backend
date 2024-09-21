@@ -101,6 +101,7 @@ public class ManagementProfilePageAPI implements ManagementProfilePageSwaggerInf
      * @param memberId 사용자 id
      * @return DetectionHistoryResponseDto 감지 내역 반환
      */
+    @Override
     @PostMapping("management/visit/{staff_id}/{member_id}/history")
     public ResponseEntity<DetectionHistoryResponseDto> getMemberDetectionHistory(
             @PathVariable("staff_id") Long staffId,
