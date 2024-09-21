@@ -3,9 +3,11 @@ package com.findbugs.findbugstaff.controller;
 import com.findbugs.findbugstaff.controller.swagger.ManagementProfilePageSwaggerInfo;
 import com.findbugs.findbugstaff.domain.DetectionHistory;
 import com.findbugs.findbugstaff.domain.Member;
+import com.findbugs.findbugstaff.dto.ManagementProfilePage.DetectionHistoryResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileSaveResponseDto;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.ManagementProfileUpdateNoteRequestDto;
+import com.findbugs.findbugstaff.implement.DetectionHistoryFinder;
 import com.findbugs.findbugstaff.mapper.ManagementProfilePage.ManagementProfilePageMapper;
 import com.findbugs.findbugstaff.service.DetectionHistoryService;
 import com.findbugs.findbugstaff.service.MemberService;
@@ -14,6 +16,8 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class ManagementProfilePageAPI implements ManagementProfilePageSwaggerInf
     private final DetectionHistoryService detectionHistoryService;
 
     private final ManagementProfilePageMapper managementProfilePageMapper;
+    private final DetectionHistoryFinder detectionHistoryFinder;
 
     /**
      * 고객관리_고객정보확인 - 방문등록 이전 고객정보확인을 위한 API
@@ -87,6 +92,23 @@ public class ManagementProfilePageAPI implements ManagementProfilePageSwaggerInf
 
         return ResponseEntity.ok(
                 ManagementProfileSaveResponseDto.builder().isSaved(true).build());
+    }
+
+
+    /**
+     * 고객관리_고객감지기록조회
+     * @param staffId 스태프 id
+     * @param memberId 사용자 id
+     * @return DetectionHistoryResponseDto 감지 내역 반환
+     */
+    @PostMapping("management/visit/{staff_id}/{member_id}/history")
+    public ResponseEntity<DetectionHistoryResponseDto> getMemberDetectionHistory(
+            @PathVariable("staff_id") Long staffId,
+            @PathVariable("member_id") Long memberId
+    ){
+
+        List<DetectionHistory> historyList = detectionHistoryFinder.findUnVisited(memberId);
+        return ResponseEntity.ok(managementProfilePageMapper.toDetectionHistoryResponseDto(historyList));
     }
 
 }

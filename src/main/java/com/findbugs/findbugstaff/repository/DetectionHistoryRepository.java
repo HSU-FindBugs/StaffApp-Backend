@@ -23,6 +23,7 @@ public interface DetectionHistoryRepository extends JpaRepository<DetectionHisto
     Page<DetectionHistory> findRecentVisitedByMemberId(@Param("memberId") Long memberId, Pageable pageable);
 
     // 방문 처리 되지 않은 감지 영상 모두를 조회
+    @EntityGraph(attributePaths = {"camera, bug"})
     @Query("select dh from DetectionHistory dh where dh.member.id = :memberId and dh.visit is null")
     List<DetectionHistory> findUnVisitedByMemberId(@Param("memberId") Long memberId);
 
