@@ -53,6 +53,7 @@ public class ManagementPageAPI implements ManagementPageSwaggerInfo {
             @PathVariable("member_name") String memberName
     ) {
         List<Member> members = memberService.searchMemberData(memberName, staffId);
+
         return ResponseEntity.ok().body(managementPageMapper.toManagementPageResponseDto(members));
     }
 

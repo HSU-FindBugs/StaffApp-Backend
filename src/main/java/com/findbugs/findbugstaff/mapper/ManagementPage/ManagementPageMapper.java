@@ -15,12 +15,15 @@ public class ManagementPageMapper {
 
     public ManagementPageResponseDto toManagementPageResponseDto(List<Member> memberList){
 
+        boolean isSearched = !memberList.isEmpty();
+
         CopyOnWriteArrayList<ManagementPageMemberDto> memberDtoList = memberList.stream()
                 .map(this::toManagementPageMemberDto)  // Member -> ManagementPageMemberDto 변환
                 .collect(Collectors.toCollection(CopyOnWriteArrayList::new));
 
         return ManagementPageResponseDto.builder()
                 .managementPageMemberDtoList(memberDtoList)
+                .isSearched(isSearched)
                 .build();
     }
 

@@ -9,4 +9,5 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @SuperBuilder
 public class ManagementPageResponseDto {
     public CopyOnWriteArrayList<ManagementPageMemberDto> managementPageMemberDtoList;
+    public boolean isSearched;
 }
