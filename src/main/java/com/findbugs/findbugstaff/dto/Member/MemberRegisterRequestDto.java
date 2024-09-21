@@ -19,7 +19,7 @@ public class MemberRegisterRequestDto {
 
     @NotEmpty(message = "이름을 작성해주세요")
     public String name;
-    @Email(message = "유효한 이메일 형식으로 작성해주세요")
+
     public String email;
     @Pattern(regexp = "^(010-\\d{4}-\\d{4})$", message = "전화번호는 010-0000-0000 형식이여야 합니다.")
     public String phoneNumber;

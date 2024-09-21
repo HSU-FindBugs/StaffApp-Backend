@@ -36,6 +36,7 @@ public class ManagementProfilePageMapper {
                 .profileUrl(member.getProfileUrl())
                 .visitStatus(visitStatus)
                 .remainingDays(remainingDays)
+                .memo(member.getNote())
                 .build();
     }
 

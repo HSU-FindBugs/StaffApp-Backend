@@ -20,4 +20,6 @@ public class ManagementProfilePageMemberDto {
     public String address;
     public String remainingDays;
     public String visitStatus;
+
+    public String memo;
 }
