@@ -1,25 +1,26 @@
 package com.findbugs.findbugstaff.controller;
+import com.findbugs.findbugstaff.service.BugDetailService;
 import com.findbugs.findbugstaff.service.S3ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/api/images")
+@RequiredArgsConstructor
 public class TestController {
 
     private final S3ImageService s3ImageService;
+    private final BugDetailService bugDetailService;
 
-    @Autowired
-    public TestController(S3ImageService s3ImageService) {
-        this.s3ImageService = s3ImageService;
-    }
 
     @Operation(summary = "이미지 업로드", description = "주어진 staffId, memberId, detectionHistoryId에 따라 이미지를 S3에 업로드합니다.")
     @ApiResponses(value = {
