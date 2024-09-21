@@ -42,7 +42,7 @@ class NotificationRepositoryTest {
     @DisplayName("최근_공지사항_10개_조회")
     void givenNotifications_whenFindRecentNotifications_thenReturnRecentNotifications() {
         // Given
-        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(0, 10);
 
         // When
         Slice<Notification> recentNotifications = notificationRepository.findRecentNotifications(pageable);

@@ -23,7 +23,7 @@ public class NotificationFinder {
      * @param startIndex 시작인덱스 (ex 10 -> 10부터 19 페이지 반환)
      */
     public List<Notification> findRecentNotifications(int startIndex) {
-        Pageable pageable = PageRequest.of(startIndex, 10, Sort.by(Sort.Direction.DESC, "createAt"));
+        Pageable pageable = PageRequest.of(startIndex, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
         return notificationRepository.findRecentNotifications(pageable).getContent();
     }
 

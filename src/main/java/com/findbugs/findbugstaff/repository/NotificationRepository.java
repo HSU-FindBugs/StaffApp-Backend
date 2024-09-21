@@ -19,6 +19,4 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query("select n from Notification n")
     Slice<Notification> findRecentNotifications(Pageable pageable);
 
-
-
 }
