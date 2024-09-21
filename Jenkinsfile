@@ -11,6 +11,7 @@ pipeline {
         AWS_ACCESS_KEY = "${AWS_ACCESS_KEY}"
         AWS_SECRET_KEY = "${AWS_SECRET_KEY}"
         ELASTIC_CACHE_URI = "${ELASTIC_CACHE_URI}"
+        FIREBASE_JSON_CONTENT = credentials('firebase-service-account') // Firebase 서비스 계정 자격 증명 추가
     }
 
     stages {
@@ -29,30 +30,22 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // 현재 작업 디렉토리 확인
-                    sh 'pwd'
-                    // 빌드 명령 실행
+                    sh 'pwd' // 현재 작업 디렉토리 확인
                     sh './gradlew build'
-                    // 빌드된 JAR 파일 확인
-                    sh 'ls -la ./build/libs/'
                 }
             }
         }
         stage('Generate Firebase Config') {
             steps {
-                // 자격증명을 안전하게 처리하는 블록 추가
-                withCredentials([string(credentialsId: 'firebase-service-account', variable: 'FIREBASE_JSON_CONTENT')]) {
-                    script {
-                        // Firebase 서비스 계정 JSON 파일 생성
-                        writeFile file: 'serviceAccountKey.json', text: FIREBASE_JSON_CONTENT
-                    }
+                script {
+                    // Jenkins 환경 변수에서 가져온 Firebase JSON을 파일로 저장
+                    writeFile file: 'serviceAccountKey.json', text: "${FIREBASE_JSON_CONTENT}"
                 }
             }
         }
         stage('Build And Deploy') {
             steps {
                 script {
-                    // 빌드된 JAR 파일을 실행하며 환경 변수 전달
                     sh """
                     java -jar \\
                     -DAWS_ACCESS_KEY=\${AWS_ACCESS_KEY} \\
@@ -70,7 +63,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    // Firebase JSON 파일 삭제 (옵션)
+                    // Firebase JSON 파일 삭제 (선택 사항)
                     sh 'rm -f serviceAccountKey.json'
                 }
             }
