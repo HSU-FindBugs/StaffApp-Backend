@@ -31,6 +31,10 @@ public class DetectedBugStatsService {
 
         DetectedBugStats detectedBugStats = getDetectedBugsStats(bugId);
 
+        log.info("detectedId = {}", detectedBugStats.getId());
+        log.info("bugId = {}", detectedBugStats.getBug().getId());
+        log.info("bugName = {}", detectedBugStats.getBug().getName());
+
         return String.format("어제 발견된 %s의 수는 총 %d마리입니다!",
                 detectedBugStats.getBug().getName(), detectedBugStats.getDetectedCount());
     }
