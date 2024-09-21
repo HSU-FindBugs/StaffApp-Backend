@@ -38,14 +38,21 @@ public class MemberSearcher {
         return members;
     }
 
-    private void saveRecentSearch(Long staffId,String searchTerm){
-        String key = "recent_search"+ staffId;
-        ListOperations<String,String> listOperations = redisTemplate.opsForList();
-        listOperations.rightPush(key,searchTerm);
-
-        // 최대 10개의 정보만 저장
-        listOperations.trim(key,0,9);
+    private void saveRecentSearch(Long staffId, String searchTerm) {
+        String key = "recent_search" + staffId;
+        ListOperations<String, String> listOperations = redisTemplate.opsForList();
+        
+        // 검색어를 리스트의 맨 뒤에 추가
+        listOperations.rightPush(key, searchTerm);
+    
+        // 최대 10개의 정보만 저장 (리스트의 0~9 인덱스 범위에서 10개를 유지)
+        long listSize = listOperations.size(key); // 현재 리스트의 길이 확인
+        if (listSize > 10) {
+            // 10개가 넘으면 첫 번째 항목 제거
+            listOperations.leftPop(key);
+        }
     }
+
 
     public List<String> getRecentSearchData(Long staffId){
         // 스테프 id에 맞는 최근 검색어 서치
