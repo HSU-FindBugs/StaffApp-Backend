@@ -21,5 +21,7 @@ public class ManagementProfilePageMemberDto {
     public String remainingDays;
     public String visitStatus;
 
+    public String phoneNumber;
+
     public String memo;
 }

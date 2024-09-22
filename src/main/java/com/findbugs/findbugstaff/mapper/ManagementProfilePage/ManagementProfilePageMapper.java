@@ -33,6 +33,7 @@ public class ManagementProfilePageMapper {
         return ManagementProfilePageMemberDto.builder()
                 .id(member.getId())
                 .name(member.getName())
+                .phoneNumber(member.getPhoneNumber())
                 .profileUrl(member.getProfileUrl())
                 .visitStatus(visitStatus)
                 .remainingDays(remainingDays)
