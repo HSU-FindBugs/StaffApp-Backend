@@ -13,7 +13,7 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
     //"FROM Visit v WHERE v.member.id = :memberId AND FUNCTION('DATE', v.visitTime) = :date")
 
     @Query("select case when count(v) > 0 then true else false end "+
-            "from Visit v where v.member.id = :memberId and function('DATE', v.visitedAt) = :date and v.manager = :staffId")
+            "from Visit v where v.member.id = :memberId and function('DATE', v.visitedAt) = :date and v.manager.id = :staffId")
     boolean existsByIdAndLocalDate(@Param("memberId") Long memberId, @Param("staffId") Long staffId, @Param("date") LocalDate date);
 
 }
