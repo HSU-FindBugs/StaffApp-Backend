@@ -38,7 +38,7 @@ public class DetectionRegister {
 
         // 방문 기록이 없다면 새로운 방문 기록 생성 및 저장
         if (!isVisited) {
-            visit = Visit.builder().member(member).manager(staff).build();
+            visit = Visit.builder().member(member).manager(staff).visitedAt(LocalDateTime.now()).build();
             visitRepository.save(visit);
         } else {
             visit = visitRepository.findByMemberIdAndStaffIdAndLocalDate(member.getId(), staff.getId(), today);
