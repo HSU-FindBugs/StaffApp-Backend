@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class DetectionHistoryFinder {
 
     // 방문 처리 된 기록 중 가장 최신 기록 1개를 조회하는 기능
     public DetectionHistory findRecentVisitedDetectionHistory(Long memberId) {
-        Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "visitedAt"));
+        Pageable pageable = PageRequest.of(0, 1);
         return detectionHistoryRepository.findRecentVisitedByMemberId(memberId, pageable)
                 .getContent().stream().findFirst().orElseThrow(NoSuchElementException::new);
     }

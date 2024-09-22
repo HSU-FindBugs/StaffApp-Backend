@@ -19,7 +19,7 @@ public interface DetectionHistoryRepository extends JpaRepository<DetectionHisto
 
     // 방문 처리 된 감지 영상 중 가장 최신 감지 영상 조회 :테스트 반영 필요
     @EntityGraph(attributePaths = {"visit"})
-    @Query("select dh from DetectionHistory dh where dh.member.id = :memberId and dh.visit is not null")
+    @Query("select dh from DetectionHistory dh where dh.member.id = :memberId and dh.visit is not null order by dh.visit.visitedAt desc")
     Page<DetectionHistory> findRecentVisitedByMemberId(@Param("memberId") Long memberId, Pageable pageable);
 
     // 방문 처리 되지 않은 감지 영상 모두를 조회
