@@ -36,6 +36,7 @@ public class DetectionRegister {
                 .bug(bugRepository.findByName(bugDetectionRequestDto.getBugName()).get()).
                 detectedAt(LocalDateTime.now()).member(memberRepository.findById(bugDetectionRequestDto
                         .getMemberId()).get()).build();
+        detectionHistoryRepository.save(saveDetection);
         if (emitter != null) {
             try {
                 BugDetectionAlertDto bugDetectionAlertDto = BugDetectionAlertDto.builder().name(member.getName())
