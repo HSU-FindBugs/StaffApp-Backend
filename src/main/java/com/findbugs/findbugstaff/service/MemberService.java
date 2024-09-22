@@ -69,6 +69,7 @@ public class MemberService {
     }
 
     // 사용자 특이사항을 수정 / 저장하는 서비스
+    @Transactional
     public void setNote(Long memberId, String updateNote){
         memberUpdater.noteUpdate(memberId, updateNote);
     }
