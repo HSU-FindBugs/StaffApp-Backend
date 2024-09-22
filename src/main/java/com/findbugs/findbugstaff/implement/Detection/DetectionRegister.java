@@ -35,8 +35,17 @@ public class DetectionRegister {
 
         // 오늘의 방문 기록 확인
         LocalDate today = LocalDate.now();
+        Visit visit;
         Boolean isVisited = visitRepository.existsByIdAndLocalDate(member.getId(), staff.getId(), today);
-        Visit visit = Visit.builder().member(member).manager(staff).build();
+
+        // 방문 기록이 없다면 새로운 방문 기록 생성 및 저장
+        if (!isVisited) {
+            visit = Visit.builder().member(member).manager(staff).build();
+            visitRepository.save(visit);
+        } else {
+            visit = visitRepository.findByMemberIdAndStaffIdAndLocalDate(member.getId(), staff.getId(), today);
+        }
+
         // 감지 이벤트 발생 -> staff에게 알림 전송
         SseEmitter emitter = sseEmitters.getEmitter(staff.getId());
         DetectionHistory saveDetection = DetectionHistory.builder()
@@ -44,7 +53,7 @@ public class DetectionRegister {
                         .orElseThrow(() -> new IllegalArgumentException("Bug not found")))
                 .detectedAt(LocalDateTime.now())
                 .member(member)
-                .visit(visit) // visit이 null이거나 존재하는 Visit 객체
+                .visit(visit)
                 .build();
 
         detectionHistoryRepository.save(saveDetection);
@@ -63,6 +72,7 @@ public class DetectionRegister {
             }
         }
     }
+
 
 
 }

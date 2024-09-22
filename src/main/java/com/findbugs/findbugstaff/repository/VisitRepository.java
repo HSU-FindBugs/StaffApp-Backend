@@ -16,4 +16,14 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
             "from Visit v where v.member.id = :memberId and function('DATE', v.visitedAt) = :date and v.manager.id = :staffId")
     boolean existsByIdAndLocalDate(@Param("memberId") Long memberId, @Param("staffId") Long staffId, @Param("date") LocalDate date);
 
+
+    @Query("SELECT v " +
+            "FROM Visit v " +
+            "WHERE v.member.id = :memberId " +
+            "AND v.manager.id = :staffId " +
+            "AND function('DATE', v.visitedAt) = :date")
+    Visit findByMemberIdAndStaffIdAndLocalDate(@Param("memberId") Long memberId,
+                                               @Param("staffId") Long staffId,
+                                               @Param("date") LocalDate date);
+
 }
