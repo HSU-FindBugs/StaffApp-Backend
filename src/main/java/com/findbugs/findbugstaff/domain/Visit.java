@@ -23,8 +23,8 @@ public class Visit extends BaseEntity{
     @Column(name = "visit_id")
     private Long id;
 
-    private LocalDateTime visitedAt;
-
+    @Column(nullable = false)
+    private LocalDateTime visitedAt = LocalDateTime.now(); // 기본값 설정 -> 현재 시간으로
     /**
      * 정기 점검, 방역 후 점검, 긴급 요청 방역
      */
