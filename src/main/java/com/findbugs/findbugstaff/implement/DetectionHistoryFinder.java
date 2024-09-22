@@ -24,8 +24,10 @@ public class DetectionHistoryFinder {
     public DetectionHistory findRecentVisitedDetectionHistory(Long memberId) {
         Pageable pageable = PageRequest.of(0, 1);
         return detectionHistoryRepository.findRecentVisitedByMemberId(memberId, pageable)
-                .getContent().stream().findFirst().orElseThrow(NoSuchElementException::new);
+                .getContent().stream().findFirst()
+                .orElseThrow(() -> new NoSuchElementException("해당 멤버 ID(" + memberId + ")에 대한 최근 탐지 이력이 없습니다."));
     }
+
 
     // 방문 처리 되지 않은 기록 모두를 조회하는 기능
     public List<DetectionHistory> findUnVisited(Long memberId) {
