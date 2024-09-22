@@ -6,10 +6,7 @@ import com.findbugs.findbugstaff.domain.Staff;
 import com.findbugs.findbugstaff.domain.Visit;
 import com.findbugs.findbugstaff.dto.Bug.BugDetectionAlertDto;
 import com.findbugs.findbugstaff.dto.Bug.BugDetectionRequestDto;
-import com.findbugs.findbugstaff.repository.BugRepository;
-import com.findbugs.findbugstaff.repository.DetectionHistoryRepository;
-import com.findbugs.findbugstaff.repository.MemberRepository;
-import com.findbugs.findbugstaff.repository.VisitRepository;
+import com.findbugs.findbugstaff.repository.*;
 import com.findbugs.findbugstaff.sse.SseEmitters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,6 +24,7 @@ public class DetectionRegister {
     private final DetectionHistoryRepository detectionHistoryRepository;
     private final BugRepository bugRepository;
     private final VisitRepository visitRepository;
+    private final CameraRepository cameraRepository;
     public void bugDetection(BugDetectionRequestDto bugDetectionRequestDto) {
         // 멤버와 연관된 staff 찾기
         Member member = memberRepository.findById(bugDetectionRequestDto.getMemberId())
@@ -54,6 +52,7 @@ public class DetectionRegister {
                 .detectedAt(LocalDateTime.now())
                 .member(member)
                 .visit(visit)
+                .camera(cameraRepository.findById(1L).get())
                 .build();
 
         detectionHistoryRepository.save(saveDetection);
