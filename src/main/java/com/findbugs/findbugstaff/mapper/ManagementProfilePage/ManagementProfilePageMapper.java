@@ -1,8 +1,6 @@
 package com.findbugs.findbugstaff.mapper.ManagementProfilePage;
 
-import com.findbugs.findbugstaff.domain.DetectionHistory;
-import com.findbugs.findbugstaff.domain.Member;
-import com.findbugs.findbugstaff.domain.Visit;
+import com.findbugs.findbugstaff.domain.*;
 import com.findbugs.findbugstaff.dto.ManagementProfilePage.*;
 import org.springframework.stereotype.Component;
 
@@ -35,12 +33,35 @@ public class ManagementProfilePageMapper {
                 .id(member.getId())
                 .name(member.getName())
                 .phoneNumber(member.getPhoneNumber())
+                .address(concatRegion(member))
                 .profileUrl(member.getProfileUrl())
                 .visitStatus(visitStatus)
                 .remainingDays(remainingDays)
                 .memo(member.getNote())
                 .build();
     }
+
+    public String concatRegion(Member member){
+        Address address = member.getAddress();
+
+        StringBuilder result = new StringBuilder();
+
+        appendIfNotEmpty(result, address.getRegion_1depth());
+        appendIfNotEmpty(result, address.getRegion_2depth());
+        appendIfNotEmpty(result, address.getRegion_3depth());
+
+        return result.toString().trim();
+    }
+
+    public void appendIfNotEmpty(StringBuilder builder, String value) {
+        if (value != null && !value.isEmpty()) {
+            if (!builder.isEmpty()) {
+                builder.append(" ");
+            }
+            builder.append(value);
+        }
+    }
+
 
     public ManagementProfilePageVisitDto toManagementPageVisitDto(
             DetectionHistory recentVisitHistory
