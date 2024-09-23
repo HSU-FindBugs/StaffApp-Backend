@@ -76,13 +76,12 @@ public class BugDetailService {
         }
     }
 
-    public String sendBugName(Long bugId){
-       Optional<Bug> bug =  bugRepository.findById(bugId);
-       if(bug.isPresent()){
-           return bug.get().getName();
-       }
-       return null;
+    public String sendBugName(Long bugId) {
+        return bugRepository.findById(bugId)
+                .map(Bug::getName)
+                .orElse("버그를 찾을 수 없습니다."); // 기본값
     }
+
 
 
 
