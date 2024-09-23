@@ -44,7 +44,7 @@ public class ImageController {
         BugDetectionRequestDto bugDetectionRequestDto = BugDetectionRequestDto.builder()
                         .bugName(bugNames).recentFindTime(LocalDateTime.now()).build();
         detectionService.handleBugDetection(bugDetectionRequestDto);
-        
+
         return ResponseEntity.status(HttpStatus.OK).body(imageUrl);
     }
 
