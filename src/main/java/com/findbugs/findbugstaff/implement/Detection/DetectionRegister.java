@@ -19,6 +19,10 @@ public class DetectionRegister {
     private final MemberRepository memberRepository;
 
     public void bugDetection(BugDetectionRequestDto bugDetectionRequestDto) {
+        System.out.println("MemberId: " + bugDetectionRequestDto.getMemberId());
+        System.out.println("RecentFindTime: " + bugDetectionRequestDto.getRecentFindTime());
+
+
         // 요청 DTO 검증
         if (bugDetectionRequestDto.getMemberId() == null || bugDetectionRequestDto.getRecentFindTime() == null) {
             throw new IllegalArgumentException("잘못된 감지 요청 데이터");

@@ -1,13 +1,24 @@
 package com.findbugs.findbugstaff.dto.Bug;
 
-import com.findbugs.findbugstaff.dto.camera.CameraDto;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Data
 @SuperBuilder
 public class BugRecordDto {
-    public CameraDto cameraDto;
+    public String bugName;
+
+    public String bugDescription;
+
+    public Long cameraId;
+
+
+    public LocalDateTime detectionDateAndTime;
+
     public BugDetailDto bugDetailDto;
+
     public BugSolutionDto bugSolutionDto;
+
 }

@@ -14,14 +14,17 @@ public class BugRecordService {
     private final CameraService cameraService;
     public BugRecordDto getBugRecord(Long detectionHistoryId){
         DetectionHistory detectionHistory = bugRecordFinder.getHistory(detectionHistoryId);
-
-
-        BugRecordDto bugRecordDto = BugRecordDto.builder().bugDetailDto(
-                        bugDetailService.getBugDataByName(detectionHistory.getBug().getName())
+        String bugname =  detectionHistory.getBug().getName();
+        String bugdescription = detectionHistory.getBug().getDescription();
+        BugRecordDto bugRecordDto = BugRecordDto.builder().bugName(bugname)
+                .bugDescription(bugdescription)
+                .cameraId(detectionHistory.getCamera().getId())
+                .detectionDateAndTime(detectionHistory.getDetectedAt())
+        .bugDetailDto(
+                        bugDetailService.getBugDataByName(bugname)
 
                 ).bugSolutionDto(
-                        bugDetailService.getBugSolution(detectionHistory.getBug().getName())
-
+                        bugDetailService.getBugSolution(bugname)
                 )
                 .build();
         return bugRecordDto;
