@@ -40,6 +40,4 @@ public class DetectionHistory extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "visit_id")
     private Visit visit;
-
-
 }

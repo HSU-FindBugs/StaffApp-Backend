@@ -27,7 +27,9 @@ public class VisitService {
         }
     }
 
+
     // 스태프가 사용자 방역 방문 시 로직
+    @Transactional
     public void staffVisitMember(Long memberId, Long staffId) {
         visitRegister.register(staffId, memberId);
     }
