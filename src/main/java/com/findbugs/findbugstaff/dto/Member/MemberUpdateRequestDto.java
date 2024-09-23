@@ -22,6 +22,6 @@ public class MemberUpdateRequestDto {
     @Positive(message = "멤버쉽은 0초과인 양수여야합니다.")
     public Long memberShip;
 
-    @NotNull(message = "주소를 입력해주세요!")
+
     public Address address;
 }
