@@ -1,9 +1,13 @@
 package com.findbugs.findbugstaff.service;
 
 import com.findbugs.findbugstaff.domain.Bug;
+import com.findbugs.findbugstaff.domain.Camera;
 import com.findbugs.findbugstaff.dto.Bug.BugDetailDto;
 import com.findbugs.findbugstaff.dto.Bug.BugSolutionDto;
+import com.findbugs.findbugstaff.implement.Camera.CameraFinder;
+import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
 import com.findbugs.findbugstaff.repository.BugRepository;
+import com.findbugs.findbugstaff.repository.CameraRepository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,8 @@ public class BugDetailService {
 
     private final Firestore firestore;
     private final BugRepository bugRepository;
+    private final MemberSearcher memberSearcher;
+    private final CameraFinder cameraFinder;
     public BugDetailDto getBugDataByName(String bugName) {
         DocumentReference docRef = firestore.collection("bugs").document(bugName);
         // 비동기적으로 문서 가져오기
@@ -82,6 +88,11 @@ public class BugDetailService {
                 .orElse("버그를 찾을 수 없습니다."); // 기본값
     }
 
+    public Long sendMemberId(String cameraSerialNumber){
+        Camera camera = cameraFinder.findByCameraSerialNum(cameraSerialNumber);
+        return camera.getMember().getId();
+
+    }
 
 
 

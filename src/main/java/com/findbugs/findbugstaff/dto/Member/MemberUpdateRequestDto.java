@@ -4,9 +4,11 @@ import com.findbugs.findbugstaff.domain.Address;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
 @SuperBuilder
+@Jacksonized
 public class MemberUpdateRequestDto {
     @Positive(message = "staff아이디는 0초과인 양수여야합니다.")
     public Long staffId;

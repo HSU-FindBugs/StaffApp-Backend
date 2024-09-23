@@ -2,6 +2,7 @@ package com.findbugs.findbugstaff.controller;
 import com.findbugs.findbugstaff.dto.Bug.BugDetectionRequestDto;
 import com.findbugs.findbugstaff.implement.Detection.DetectionUpdater;
 import com.findbugs.findbugstaff.service.BugDetailService;
+import com.findbugs.findbugstaff.service.CameraService;
 import com.findbugs.findbugstaff.service.DetectionService;
 import com.findbugs.findbugstaff.service.S3ImageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,7 +42,9 @@ public class ImageController {
         // 이미지 업로드 및 detectionHistory 업데이트
         String imageUrl = s3ImageService.upload(image, cameraSerialNumber, bugId);
         String bugNames = bugDetailService.sendBugName(bugId);
+        Long memberID = bugDetailService.sendMemberId(cameraSerialNumber);
         BugDetectionRequestDto bugDetectionRequestDto = BugDetectionRequestDto.builder()
+                        .memberId(memberID)
                         .bugName(bugNames).recentFindTime(LocalDateTime.now()).build();
         detectionService.handleBugDetection(bugDetectionRequestDto);
 
