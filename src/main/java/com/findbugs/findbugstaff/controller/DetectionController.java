@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/detect")
 @RequiredArgsConstructor
 public class DetectionController {
-
     private final DetectionService detectionService;
-
     @PostMapping("/bug-detection")
     public ResponseEntity<String> detectBug(@RequestBody BugDetectionRequestDto bugDetectionDto) {
         System.out.println("Received DTO: " + bugDetectionDto);
@@ -23,7 +21,5 @@ public class DetectionController {
 
         return ResponseEntity.ok().body("성공적으로 벌래 탐지 알림을 매니저에게 전달했습니다.");
     }
-
-
 
 }
