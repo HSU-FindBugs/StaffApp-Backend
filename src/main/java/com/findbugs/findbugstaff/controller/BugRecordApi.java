@@ -32,7 +32,7 @@ public class BugRecordApi {
             @ApiResponse(responseCode = "404", description = "주어진 탐지 이력 ID에 해당하는 버그 기록을 찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류가 발생했습니다.")
     })
-    @GetMapping("/{detectionHistoryId}")
+    @GetMapping("/detection-history/{detectionHistoryId}")
     public ResponseEntity<BugRecordDto> getSingleBugRecordDetail(
             @Parameter(description = "탐지 이력 ID", required = true)
             @PathVariable Long detectionHistoryId) {
@@ -45,7 +45,7 @@ public class BugRecordApi {
             @ApiResponse(responseCode = "404", description = "주어진 멤버 ID에 해당하는 버그 탐지 이력을 찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 오류가 발생했습니다.")
     })
-    @GetMapping("/{member_id}")
+    @GetMapping("/member/{member_id}/detection-history")
     public ResponseEntity<List<DetectionHistoryDto>> getDetectionBugHistoryList(
             @Parameter(description = "멤버 ID", required = true)
             @PathVariable("member_id") Long memberId) {

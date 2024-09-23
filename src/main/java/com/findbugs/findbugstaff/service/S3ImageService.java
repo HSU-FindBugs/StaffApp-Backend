@@ -69,7 +69,7 @@ public class S3ImageService {
 
 
 
-    public String upload(MultipartFile image, String cameraSerialNumber, Long bugId) {
+    public String upload(MultipartFile image, String cameraSerialNumber, String bugName) {
         String memberId = "";
         String staffId = "";
         if (image.isEmpty() || Objects.isNull(image.getOriginalFilename())) {
@@ -77,7 +77,7 @@ public class S3ImageService {
         }
 
         Camera camera = cameraFinder.findByCameraSerialNum(cameraSerialNumber);
-        Bug bug = bugFinder.getBugInfo(bugId);
+        Bug bug = bugFinder.getBugInfo(bugName);
         Optional<Member> getMember = memberSearcher.findById(camera.getMember().getId());
 
         if (getMember.isPresent()) {

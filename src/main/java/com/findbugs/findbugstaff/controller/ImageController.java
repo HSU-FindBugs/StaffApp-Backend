@@ -37,15 +37,14 @@ public class ImageController {
     public ResponseEntity<String> uploadImage(
             @RequestParam("image") MultipartFile image,
             @RequestParam("cameraSerialNumber") String cameraSerialNumber,
-            @RequestParam("bugId") Long bugId) {
+            @RequestParam("bugName") String bugName) {
 
         // 이미지 업로드 및 detectionHistory 업데이트
-        String imageUrl = s3ImageService.upload(image, cameraSerialNumber, bugId);
-        String bugNames = bugDetailService.sendBugName(bugId);
+        String imageUrl = s3ImageService.upload(image, cameraSerialNumber, bugName);
         Long memberID = bugDetailService.sendMemberId(cameraSerialNumber);
         BugDetectionRequestDto bugDetectionRequestDto = BugDetectionRequestDto.builder()
                         .memberId(memberID)
-                        .bugName(bugNames).recentFindTime(LocalDateTime.now()).build();
+                        .bugName(bugName).recentFindTime(LocalDateTime.now()).build();
         detectionService.handleBugDetection(bugDetectionRequestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(imageUrl);
