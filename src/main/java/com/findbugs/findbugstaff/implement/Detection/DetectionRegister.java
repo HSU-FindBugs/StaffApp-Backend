@@ -51,7 +51,7 @@ public class DetectionRegister {
                         .orElseThrow(() -> new IllegalArgumentException("Bug not found")))
                 .detectedAt(LocalDateTime.now())
                 .member(member)
-                .visit(visit)
+                .visit(null)
                 .camera(cameraRepository.findById(1L).get())
                 .build();
 
