@@ -25,6 +25,7 @@ public class MemberUpdater {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 memberId입니다: "+ memberUpdateRequestDto.getMemberId()));
         if(checkMember.getManager().equals(staff)){
             Member updateMember = checkMember;
+            updateMember.updateMemberShip(memberUpdateRequestDto.getMemberShip());
             updateMember.updateAddress(memberUpdateRequestDto.getAddress());
             updateMember.updateName(memberUpdateRequestDto.getName());
             updateMember.updatePhoneNumber(memberUpdateRequestDto.getPhoneNumber());

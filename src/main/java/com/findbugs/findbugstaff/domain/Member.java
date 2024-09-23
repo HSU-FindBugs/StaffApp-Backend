@@ -63,4 +63,7 @@ public class Member {
         this.note = newNote;
     }
 
+    public void updateMemberShip(Long updateMembership){
+        this.membership = updateMembership;
+    }
 }
