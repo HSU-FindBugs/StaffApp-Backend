@@ -21,4 +21,10 @@ public class CameraFinder {
     public List<Camera> findAllByMember(Member member) {
         return cameraRepository.findAllByMember(member);
     }
+
+    public Camera findByCameraSerialNum(String cameraSerialNumber){
+        return cameraRepository.findBySerialId(cameraSerialNumber);
+    }
+
+
 }

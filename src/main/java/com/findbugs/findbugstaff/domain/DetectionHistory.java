@@ -40,4 +40,12 @@ public class DetectionHistory extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "visit_id")
     private Visit visit;
+
+
+
+    public void updateImageUrl(String changeUrl){
+        this.imageUrl = changeUrl;
+    }
+
+
 }

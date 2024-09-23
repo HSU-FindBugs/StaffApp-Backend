@@ -3,6 +3,18 @@ package com.findbugs.findbugstaff.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
+import com.findbugs.findbugstaff.domain.Bug;
+import com.findbugs.findbugstaff.domain.Camera;
+import com.findbugs.findbugstaff.domain.DetectionHistory;
+import com.findbugs.findbugstaff.domain.Member;
+import com.findbugs.findbugstaff.implement.Bug.BugFinder;
+import com.findbugs.findbugstaff.implement.Camera.CameraFinder;
+import com.findbugs.findbugstaff.implement.Member.MemberFinder;
+import com.findbugs.findbugstaff.implement.Member.MemberSearcher;
+import com.findbugs.findbugstaff.repository.BugRepository;
+import com.findbugs.findbugstaff.repository.DetectionHistoryRepository;
+import com.findbugs.findbugstaff.repository.MemberRepository;
+import com.findbugs.findbugstaff.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,17 +29,20 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class S3ImageService {
-
+    private final MemberFinder memberFinder;
+    private final MemberSearcher memberSearcher;
+    private final StaffService staffService;
+    private final CameraFinder cameraFinder;
+    private final BugFinder bugFinder;
     private final AmazonS3 amazonS3;
+    private final DetectionHistoryRepository detectionHistoryRepository;
 
     @Value("${AWS_S3_BUCKET}")
     private String bucketName;
@@ -54,12 +69,46 @@ public class S3ImageService {
 
 
 
-    public String upload(MultipartFile image, String staffId, String memberId, String detectionHistoryId) {
+    public String upload(MultipartFile image, String cameraSerialNumber, Long bugId) {
+        String memberId = "";
+        String staffId = "";
         if (image.isEmpty() || Objects.isNull(image.getOriginalFilename())) {
             throw new MultipartException("Uploaded file is empty or missing filename.");
         }
-        return this.uploadImage(image, staffId, memberId, detectionHistoryId);
+
+        Camera camera = cameraFinder.findByCameraSerialNum(cameraSerialNumber);
+        Bug bug = bugFinder.getBugInfo(bugId);
+        Optional<Member> getMember = memberSearcher.findById(camera.getMember().getId());
+
+        if (getMember.isPresent()) {
+            memberId = String.valueOf(getMember.get().getId());
+            staffId = String.valueOf(staffService.getStaff(getMember.get().getManager().getId()).getId());
+        }
+
+        // detectionHistory 만들기
+        DetectionHistory detectionHistory = DetectionHistory.builder()
+                .camera(camera)
+                .createdAt(LocalDateTime.now())
+                .detectedAt(LocalDateTime.now())
+                .bug(bug)
+                .imageUrl("") // 처음엔 빈 값으로 초기화
+                .member(getMember.get())
+                .updatedAt(LocalDateTime.now())
+                .visit(null)
+                .build();
+
+        detectionHistoryRepository.save(detectionHistory);
+
+        // 이미지 업로드 및 URL 가져오기
+        String imageUrl = this.uploadImage(image, staffId, memberId, String.valueOf(detectionHistory.getId()));
+
+        // detectionHistory의 imageUrl 업데이트
+        detectionHistory.updateImageUrl(imageUrl);
+        detectionHistoryRepository.save(detectionHistory); // 업데이트된 내용 다시 저장
+
+        return imageUrl; // 반환된 이미지 URL을 리턴
     }
+
 
     private String uploadImage(MultipartFile image, String staffId, String memberId, String detectionHistoryId) {
         this.validateImageFileExtention(image.getOriginalFilename());

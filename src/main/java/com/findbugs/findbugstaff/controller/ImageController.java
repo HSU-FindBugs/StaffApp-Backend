@@ -1,5 +1,8 @@
 package com.findbugs.findbugstaff.controller;
+import com.findbugs.findbugstaff.dto.Bug.BugDetectionRequestDto;
+import com.findbugs.findbugstaff.implement.Detection.DetectionUpdater;
 import com.findbugs.findbugstaff.service.BugDetailService;
+import com.findbugs.findbugstaff.service.DetectionService;
 import com.findbugs.findbugstaff.service.S3ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -19,8 +23,8 @@ import java.util.concurrent.ExecutionException;
 public class ImageController {
 
     private final S3ImageService s3ImageService;
+    private final DetectionService detectionService;
     private final BugDetailService bugDetailService;
-
 
     @Operation(summary = "이미지 업로드", description = "주어진 staffId, memberId, detectionHistoryId에 따라 이미지를 S3에 업로드합니다.")
     @ApiResponses(value = {
@@ -31,13 +35,19 @@ public class ImageController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadImage(
             @RequestParam("image") MultipartFile image,
-            @RequestParam("staffId") String staffId,
-            @RequestParam("memberId") String memberId,
-            @RequestParam("detectionHistoryId") String detectionHistoryId) {
+            @RequestParam("cameraSerialNumber") String cameraSerialNumber,
+            @RequestParam("bugId") Long bugId) {
 
-        String imageUrl = s3ImageService.upload(image, staffId, memberId, detectionHistoryId);
+        // 이미지 업로드 및 detectionHistory 업데이트
+        String imageUrl = s3ImageService.upload(image, cameraSerialNumber, bugId);
+        String bugNames = bugDetailService.sendBugName(bugId);
+        BugDetectionRequestDto bugDetectionRequestDto = BugDetectionRequestDto.builder()
+                        .bugName(bugNames).recentFindTime(LocalDateTime.now()).build();
+        detectionService.handleBugDetection(bugDetectionRequestDto);
+        
         return ResponseEntity.status(HttpStatus.OK).body(imageUrl);
     }
+
 
     @Operation(summary = "이미지 URL 조회", description = "주어진 staffId, memberId, detectionHistoryId에 따라 S3에서 이미지 URL을 조회합니다.")
     @ApiResponses(value = {

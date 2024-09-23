@@ -3,6 +3,7 @@ package com.findbugs.findbugstaff.service;
 import com.findbugs.findbugstaff.domain.Bug;
 import com.findbugs.findbugstaff.dto.Bug.BugDetailDto;
 import com.findbugs.findbugstaff.dto.Bug.BugSolutionDto;
+import com.findbugs.findbugstaff.repository.BugRepository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BugDetailService {
 
     private final Firestore firestore;
+    private final BugRepository bugRepository;
     public BugDetailDto getBugDataByName(String bugName) {
         DocumentReference docRef = firestore.collection("bugs").document(bugName);
         // 비동기적으로 문서 가져오기
@@ -73,7 +76,13 @@ public class BugDetailService {
         }
     }
 
-
+    public String sendBugName(Long bugId){
+       Optional<Bug> bug =  bugRepository.findById(bugId);
+       if(bug.isPresent()){
+           return bug.get().getName();
+       }
+       return null;
+    }
 
 
 
