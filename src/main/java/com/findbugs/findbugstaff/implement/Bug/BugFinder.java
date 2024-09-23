@@ -13,15 +13,9 @@ import java.util.Optional;
 public class BugFinder {
     private final BugRepository bugRepository;
 
-    public Bug getBugInfo(Long bugId){
-        Optional<Bug> bug = bugRepository.findById(bugId);
-        if(bug.isPresent()){
-            return bug.get();
-
-        }
-        else{
-            return null;
-        }
+    public Bug getBugInfo(Long bugId) {
+        return bugRepository.findById(bugId)
+                .orElseThrow(() -> new IllegalArgumentException("버그가 존재하지 않습니다."));
     }
 
 }

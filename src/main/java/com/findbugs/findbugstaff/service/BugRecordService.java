@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 public class BugRecordService {
     private final BugDetailService bugDetailService;
 
+    public BugRecordDto getBugRecord(Long detectionHistoryId){
+        BugRecordDto bugRecordDto = BugRecordDto.builder().bugDetailDto().bugSolutionDto().cameraDto()
+    }
 
 
 }
