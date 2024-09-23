@@ -15,4 +15,5 @@ public class ManagementPageMemberDto {
     public LocalDateTime recentVisit;
     public String phoneNumber;
     public Long membership;
+    public String profileUrl;
 }

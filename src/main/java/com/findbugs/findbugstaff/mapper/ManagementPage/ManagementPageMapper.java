@@ -35,6 +35,7 @@ public class ManagementPageMapper {
                 .address(member.getAddress())
                 .phoneNumber(member.getPhoneNumber())
                 .recentVisit(member.getRecentVisit())
+                .profileUrl(member.getProfileUrl())
                 .build();
     }
 
