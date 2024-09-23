@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    java -jar \\
+                    java -Duser.timezone=Asia/Seoul -jar \\
                     -DAWS_ACCESS_KEY=\${AWS_ACCESS_KEY} \\
                     -DAWS_SECRET_KEY=\${AWS_SECRET_KEY} \\
                     -DAWS_REGION=\${AWS_REGION} \\
@@ -57,6 +57,7 @@ pipeline {
                     -Dfirebase.config=serviceAccountKey.json \\
                     ./build/libs/StaffApp-Backend-0.0.1-SNAPSHOT.jar
                     """
+
                 }
             }
         }

@@ -21,7 +21,8 @@ public class BugRecordService {
         BugRecordDto bugRecordDto = BugRecordDto.builder().bugName(bugname)
                 .bugDescription(bugdescription)
                 .cameraId(detectionHistory.getCamera().getId())
-                .detectionDateAndTime(detectionHistory.getDetectedAt())
+                .bugFindDate(detectionHistory.getDetectedAt().toLocalDate())
+                .bugFindTime(detectionHistory.getDetectedAt().toLocalTime())
         .bugDetailDto(
                         bugDetailService.getBugDataByName(bugname)
 
