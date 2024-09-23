@@ -33,14 +33,25 @@ public class Staff extends BaseEntity{
     @Embedded
     private Address territory;
 
-//    @Embedded
-//    @AttributeOverrides({
-//            @AttributeOverride(name = "region_1depth", column=@Column(name="staff_region_1depth")),
-//            @AttributeOverride(name = "region_2depth", column=@Column(name="staff_region_2depth")),
-//            @AttributeOverride(name = "region_3depth", column=@Column(name="staff_region_3depth")),
-//            @AttributeOverride(name = "street_name",   column=@Column(name="staff_street_name")),
-//            @AttributeOverride(name = "detail",        column=@Column(name="staff_detail_address"))
-//    })
-//    private Address address;
+    public String getStringAddress(){
+        Address territory = this.getTerritory();
+
+        StringBuilder result = new StringBuilder();
+
+        appendIfNotEmpty(result, territory.getRegion_1depth());
+        appendIfNotEmpty(result, territory.getRegion_2depth());
+        appendIfNotEmpty(result, territory.getRegion_3depth());
+
+        return result.toString().trim();
+    }
+
+    public void appendIfNotEmpty(StringBuilder builder, String value) {
+        if (value != null && !value.isEmpty()) {
+            if (!builder.isEmpty()) {
+                builder.append(" ");
+            }
+            builder.append(value);
+        }
+    }
 
 }
