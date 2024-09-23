@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -15,6 +17,10 @@ public class DetectionHistoryService {
 
     public DetectionHistory findRecentVisitedDetectionHistoryById(Long MemberId) {
         return detectionHistoryFinder.findRecentVisitedDetectionHistory(MemberId);
+    }
+
+    public List<DetectionHistory> findDetectionHistoryById(Long memberId){
+        return detectionHistoryFinder.findUnVisited(memberId);
     }
 
 }
