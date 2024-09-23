@@ -107,7 +107,6 @@ public class ManagementProfilePageAPI implements ManagementProfilePageSwaggerInf
             @PathVariable("staff_id") Long staffId,
             @PathVariable("member_id") Long memberId
     ){
-
         List<DetectionHistory> historyList = detectionHistoryFinder.findUnVisited(memberId);
         return ResponseEntity.ok(managementProfilePageMapper.toDetectionHistoryResponseDto(historyList));
     }

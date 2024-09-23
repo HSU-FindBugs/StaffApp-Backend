@@ -93,19 +93,17 @@ public class ManagementProfilePageMapper {
         String date = dateTime.format(dateFormatter);
         String time = dateTime.format(timeFormatter);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+        String formattedTime = dateTime.format(formatter);
+
         return DetectionHistoryDto.builder()
                 .id(detectionHistory.getId())
                 .detectionImgUrl(detectionHistory.getImageUrl())
                 .name(detectionHistory.getBug().getName())
                 .camera(detectionHistory.getCamera().getName())
+                .localDateTime(formattedTime)
                 .date(date)
                 .time(time)
                 .build();
     }
-
-
-
-
-
-
 }

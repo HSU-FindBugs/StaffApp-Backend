@@ -14,11 +14,11 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @Setter
 public class DetectionHistoryDto {
-
     Long id;
     String detectionImgUrl;
     String camera;
     String name;
     String date;
     String time;
+    String localDateTime;
 }
