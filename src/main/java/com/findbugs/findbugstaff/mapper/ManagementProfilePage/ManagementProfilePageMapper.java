@@ -21,6 +21,7 @@ public class ManagementProfilePageMapper {
         ManagementProfilePageMemberDto memberDto = toManagementProfilePageMemberDto(member, visitStatus, remainingDays);
         ManagementProfilePageVisitDto visitDto = toManagementPageVisitDto(recentVisitHistory);
 
+
         return ManagementProfileResponseDto.builder()
                 .managementProfilePageVisitDto(visitDto)
                 .managementProfilePageMemberDto(memberDto)
@@ -44,6 +45,16 @@ public class ManagementProfilePageMapper {
     public ManagementProfilePageVisitDto toManagementPageVisitDto(
             DetectionHistory recentVisitHistory
     ){
+
+        if(recentVisitHistory == null){
+
+            return ManagementProfilePageVisitDto.builder()
+                    .title("감지 된 벌레가 없습니다")
+                    .visitComment("아직 감지된 벌레가 없어요\n찾아벌레와 함께 현재 청결 상황을 유지하세요 :D")
+                    .visitedAt("감지 된 벌레가 없습니다")
+                    .detectedImgUrl("https://image.dongascience.com/Photo/2016/04/14615696505046.png")
+                    .build();
+        }
 
         Visit visit = recentVisitHistory.getVisit();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd");

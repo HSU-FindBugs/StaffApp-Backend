@@ -25,7 +25,7 @@ public class DetectionHistoryFinder {
         Pageable pageable = PageRequest.of(0, 1);
         return detectionHistoryRepository.findRecentVisitedByMemberId(memberId, pageable)
                 .getContent().stream().findFirst()
-                .orElseThrow(() -> new NoSuchElementException("해당 멤버 ID(" + memberId + ")에 대한 최근 탐지 이력이 없습니다."));
+                .orElseGet(()-> null);
     }
 
 
