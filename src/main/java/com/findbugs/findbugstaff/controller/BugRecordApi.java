@@ -36,6 +36,9 @@ public class BugRecordApi {
     public ResponseEntity<BugRecordDto> getSingleBugRecordDetail(
             @Parameter(description = "탐지 이력 ID", required = true)
             @PathVariable Long detectionHistoryId) {
+        if(bugRecordService.getBugRecord(detectionHistoryId) == null){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok().body(bugRecordService.getBugRecord(detectionHistoryId));
     }
 
@@ -52,7 +55,9 @@ public class BugRecordApi {
 
         // DetectionHistory 리스트를 조회
         List<DetectionHistory> bugHistoryList = detectionHistoryService.findDetectionHistoryById(memberId);
-
+        if(bugHistoryList.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
         // DetectionHistory를 DetectionHistoryDto로 변환
         List<DetectionHistoryDto> bugHistoryDtoList = bugHistoryList.stream()
                 .map(history -> DetectionHistoryDto.builder()
