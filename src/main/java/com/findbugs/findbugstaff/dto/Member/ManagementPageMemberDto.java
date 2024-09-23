@@ -14,4 +14,5 @@ public class ManagementPageMemberDto {
     public Address address;
     public LocalDateTime recentVisit;
     public String phoneNumber;
+    public Long membership;
 }

@@ -16,6 +16,7 @@ public interface MemberMapper {
     @Mapping(source = "address", target = "address")
     @Mapping(source = "recentVisit", target = "recentVisit")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
+    @Mapping(source = "membership", target = "membership")
     ManagementPageMemberDto toMemberDto(Member member);
 
     // 필요하다면, DTO에서 Entity로 변환하는 메서드도 추가 가능
