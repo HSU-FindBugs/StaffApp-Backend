@@ -2,6 +2,7 @@ package com.findbugs.findbugstaff.service;
 
 import com.findbugs.findbugstaff.domain.Bug;
 import com.findbugs.findbugstaff.dto.Bug.BugDetailDto;
+import com.findbugs.findbugstaff.dto.Bug.BugSolutionDto;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,39 @@ public class BugDetailService {
             return null;
         }
     }
+
+    public BugSolutionDto getBugSolution(String bugName){
+        DocumentReference docRef = firestore.collection("solution").document(bugName);
+        // 비동기적으로 문서 가져오기
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+
+        try {
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+                System.out.println("data: " + document.getData());
+                Map<String, Object> data = document.getData();
+                BugSolutionDto bugSolutionDto = BugSolutionDto.builder()
+                        .firstSolution((String) data.get("1단계"))  // nosql의 appearance 필드
+                        .secondSolution((String) data.get("2단계"))  // nosql의 inhabitation 필드
+                        .thirdSolution((String) data.get("3단계"))  // nosql의 quarantine 필드
+                        .fourSolution((String) data.get("4단계"))  // nosql의 quarantine 필드
+                        .build();
+
+                return bugSolutionDto;
+            } else {
+                System.out.println("데이터 서치 에러, 존재하지 않는 데이터입니다.");
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
 
 }
