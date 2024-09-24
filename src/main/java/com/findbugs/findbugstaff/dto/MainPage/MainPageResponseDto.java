@@ -28,6 +28,7 @@ public class MainPageResponseDto {
     public String bugName;
     public String bugDescription;
     public String bugStats;
+    public String bugProfileImg;
 
     // 공지 사항
     public List<NotificationDto> notificationDtoList;

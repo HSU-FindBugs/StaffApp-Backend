@@ -25,6 +25,7 @@ public interface MainPageMapper {
     @Mapping(source = "bug.description", target = "bugDescription")
     @Mapping(source = "countDetectedBugs", target = "bugStats")
     @Mapping(source = "notifications", target = "notificationDtoList")
+    @Mapping(source = "bug.bugImageUrl", target = "bugProfileImg")
     MainPageResponseDto toMainPageResponseDto(
             Staff staff,
             Long countManagedMember,    // ex) 총 37명을 관리하고 있습니다
