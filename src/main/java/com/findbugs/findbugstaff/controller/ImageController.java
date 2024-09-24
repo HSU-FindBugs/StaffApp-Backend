@@ -34,6 +34,7 @@ public class ImageController {
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @CrossOrigin(origins = "http://localhost:8000")
     public ResponseEntity<String> uploadImage(
             @RequestParam("image") MultipartFile image,
             @RequestParam("cameraSerialNumber") String cameraSerialNumber,
