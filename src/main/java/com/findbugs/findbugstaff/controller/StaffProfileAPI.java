@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class StaffProfileAPI implements StaffProfileSwaggerInfo {
 
-    private StaffReader staffReader;
-    private StaffProfileMapper staffProfileMapper;
+    private final StaffReader staffReader;
+    private final StaffProfileMapper staffProfileMapper;
 
     /**
      * 직원 프로필 조회
