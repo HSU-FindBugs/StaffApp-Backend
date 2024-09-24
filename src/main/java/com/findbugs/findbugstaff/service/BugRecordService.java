@@ -34,6 +34,4 @@ public class BugRecordService {
                 .build();
         return bugRecordDto;
     }
-
-
 }

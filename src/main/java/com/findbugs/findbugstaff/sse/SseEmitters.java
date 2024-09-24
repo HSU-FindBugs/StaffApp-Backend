@@ -20,18 +20,22 @@ public class SseEmitters {
             log.info("Existing emitter removed for staff ID {}: {}", staffId, existingEmitter);
         }
 
-        log.info("New emitter added for staff ID {}: {}", staffId, emitter);
-        emitter.onCompletion(() -> {
+        SseEmitter newEmitter = new SseEmitter(2 * 24 * 60 * 60 * 1000L); // 2일
+
+        log.info("New emitter added for staff ID {}: {}", staffId, newEmitter);
+        newEmitter.onCompletion(() -> {
             log.info("onCompletion callback for staff ID {}", staffId);
             emittersMap.remove(staffId); // 만료되면 리스트에서 삭제
         });
-        emitter.onTimeout(() -> {
+        newEmitter.onTimeout(() -> {
             log.info("onTimeout callback for staff ID {}", staffId);
-            emitter.complete();
+            newEmitter.complete();
         });
 
-        return emitter;
+        return newEmitter; // 새로운 emitter를 반환
     }
+
+
 
     // 특정 staff ID에 해당하는 emitter 반환
     public SseEmitter getEmitter(Long staffId) {
