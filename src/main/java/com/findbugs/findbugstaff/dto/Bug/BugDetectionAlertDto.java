@@ -13,5 +13,5 @@ public class BugDetectionAlertDto {
 
     public Address address;
 
-    public LocalDateTime recentFindTime;
+    public String recentFindTime;
 }

@@ -45,7 +45,7 @@ public class DetectionRegister {
                 BugDetectionAlertDto bugDetectionAlertDto = BugDetectionAlertDto.builder()
                         .name(member.getName())
                         .address(member.getAddress())
-                        .recentFindTime(bugDetectionRequestDto.getRecentFindTime())
+                        .recentFindTime(bugDetectionRequestDto.getRecentFindTime().toString())
                         .build();
                 System.out.println("sse이벤트 정상 발생"+bugDetectionAlertDto.toString());
                 emitter.send(SseEmitter.event().name("bug-detected").data(bugDetectionAlertDto));
