@@ -21,17 +21,29 @@ public class SseEmitters {
         }
 
         log.info("New emitter added for staff ID {}: {}", staffId, emitter);
+
+        // Completion callback
         emitter.onCompletion(() -> {
             log.info("onCompletion callback for staff ID {}", staffId);
             emittersMap.remove(staffId); // 만료되면 리스트에서 삭제
         });
+
+        // Timeout callback
         emitter.onTimeout(() -> {
             log.info("onTimeout callback for staff ID {}", staffId);
+            emittersMap.remove(staffId); // 타임아웃되면 삭제
             emitter.complete();
+        });
+
+        // Error callback 추가
+        emitter.onError((ex) -> {
+            log.error("onError callback for staff ID {}: {}", staffId, ex.getMessage());
+            emittersMap.remove(staffId);
         });
 
         return emitter;
     }
+
 
     // 특정 staff ID에 해당하는 emitter 반환
     public SseEmitter getEmitter(Long staffId) {
