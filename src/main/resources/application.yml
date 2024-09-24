@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
   application:
     name: FindBugs-Staff
   datasource:
@@ -27,3 +31,7 @@ AWS_SECRET_KEY: ${AWS_SECRET_KEY}
 AWS_REGION: ${AWS_REGION}
 AWS_S3_BUCKET: ${AWS_S3_BUCKET}
 AWS_STACK_AUTO: ${AWS_STACK_AUTO}
+
+
+
+
