@@ -23,7 +23,7 @@ public class BugRecordService {
                 .bugDescription(bugdescription)
                 .bugUrl(bugUrl)
                 .cameraId(detectionHistory.getCamera().getId())
-                .bugFindDate(detectionHistory.getDetectedAt().toLocalDate())
+                .bugFindDate(detectionHistory.getDetectedAt().toLocalDate().toString())
                 .bugFindTime(detectionHistory.getDetectedAt().toLocalTime().toString())
         .bugDetailDto(
                         bugDetailService.getBugDataByName(bugname)

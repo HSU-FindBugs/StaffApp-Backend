@@ -18,7 +18,7 @@ public class BugRecordDto {
 
     public Long cameraId;
 
-    public LocalDate bugFindDate;
+    public String bugFindDate;
 
     public String bugFindTime;
     public BugDetailDto bugDetailDto;
