@@ -19,12 +19,15 @@ public interface NotificationMapper {
     @Mapping(source = "profileUrl", target = "profileUrl")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "createdAt", target = "time", qualifiedByName = "getRemainTime")
+    @Mapping(target = "time", expression = "java(getRemainTime(notification.getCreatedAt()))")
     NotificationDto toNotificationDto(Notification notification);
-
 
     @Named("getRemainTime")
     default String getRemainTime(LocalDateTime createdAt) {
+        if (createdAt == null) {
+            return "Unknown time";
+        }
+
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(createdAt, now);
         long hours = duration.toHours();
