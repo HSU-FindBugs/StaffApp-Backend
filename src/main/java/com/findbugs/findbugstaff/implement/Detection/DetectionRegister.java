@@ -47,7 +47,7 @@ public class DetectionRegister {
                         .address(member.getAddress())
                         .recentFindTime(bugDetectionRequestDto.getRecentFindTime())
                         .build();
-
+                System.out.println("sse이벤트 정상 발생"+bugDetectionAlertDto.toString());
                 emitter.send(SseEmitter.event().name("bug-detected").data(bugDetectionAlertDto));
             } catch (IOException e) {
                 // 예외 로그 남기기
