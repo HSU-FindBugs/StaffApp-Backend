@@ -17,8 +17,8 @@ public interface NotificationMapper {
     NotificationMapper INSTANCE = Mappers.getMapper(NotificationMapper.class);
 
     @Mapping(source = "profileUrl", target = "profileUrl")
-    @Mapping(source = "title", target = "profileUrl")
-    @Mapping(source = "content", target = "profileUrl")
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "content", target = "content")
     @Mapping(source = "createdAt", target = "time", qualifiedByName = "getRemainTime")
     NotificationDto toNotificationDto(Notification notification);
 
