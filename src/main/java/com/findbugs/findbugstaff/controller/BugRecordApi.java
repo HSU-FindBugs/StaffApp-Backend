@@ -36,11 +36,13 @@ public class BugRecordApi {
     public ResponseEntity<BugRecordDto> getSingleBugRecordDetail(
             @Parameter(description = "탐지 이력 ID", required = true)
             @PathVariable Long detectionHistoryId) {
-        if(bugRecordService.getBugRecord(detectionHistoryId) == null){
+        BugRecordDto bugRecord = bugRecordService.getBugRecord(detectionHistoryId);
+        if (bugRecord == null) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok().body(bugRecordService.getBugRecord(detectionHistoryId));
+        return ResponseEntity.ok().body(bugRecord);
     }
+
 
     @Operation(summary = "버그 탐지 이력 목록 조회", description = "주어진 멤버 ID에 대한 버그 탐지 이력 목록을 조회합니다.")
     @ApiResponses(value = {
@@ -63,7 +65,7 @@ public class BugRecordApi {
                 .map(history -> DetectionHistoryDto.builder()
                         .id(history.getId())
                         .detectionImgUrl(history.getImageUrl().toString())
-                        .camera(history.getCamera().toString())
+                        .camera(history.getCamera().getId().toString())
                         .name(history.getBug().getName())
                         .date(history.getDetectedAt().toLocalDate().toString()) // LocalDate로 변환 필요 시
                         .time(history.getDetectedAt().toLocalTime().toString()) // LocalTime으로 변환 필요 시

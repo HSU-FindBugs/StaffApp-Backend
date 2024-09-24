@@ -5,7 +5,6 @@ import com.findbugs.findbugstaff.dto.ProfileResponseDto;
 import com.findbugs.findbugstaff.implement.StaffFinder;
 import com.findbugs.findbugstaff.implement.StaffReader;
 import com.findbugs.findbugstaff.mapper.StaffProfileMapper;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
