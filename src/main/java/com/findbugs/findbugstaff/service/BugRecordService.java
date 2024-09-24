@@ -8,6 +8,8 @@ import com.findbugs.findbugstaff.repository.DetectionHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 public class BugRecordService {
@@ -19,11 +21,15 @@ public class BugRecordService {
         String bugname =  detectionHistory.getBug().getName();
         String bugUrl = detectionHistory.getBug().getBugImageUrl();
         String bugdescription = detectionHistory.getBug().getDescription();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
+        String findDate = detectionHistory.getDetectedAt().toLocalDate().format(formatter);
+
         BugRecordDto bugRecordDto = BugRecordDto.builder().bugName(bugname)
                 .bugDescription(bugdescription)
                 .bugUrl(bugUrl)
                 .cameraId(detectionHistory.getCamera().getId())
-                .bugFindDate(detectionHistory.getDetectedAt().toLocalDate().toString())
+                .bugFindDate(findDate)
                 .bugFindTime(detectionHistory.getDetectedAt().toLocalTime().toString())
         .bugDetailDto(
                         bugDetailService.getBugDataByName(bugname)
