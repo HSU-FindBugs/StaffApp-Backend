@@ -20,7 +20,7 @@ public class BugRecordDto {
 
     public LocalDate bugFindDate;
 
-    public LocalTime bugFindTime;
+    public String bugFindTime;
     public BugDetailDto bugDetailDto;
 
     public BugSolutionDto bugSolutionDto;
