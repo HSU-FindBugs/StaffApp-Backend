@@ -7,6 +7,7 @@ import com.findbugs.findbugstaff.dto.Bug.BugDetectionRequestDto;
 import com.findbugs.findbugstaff.repository.MemberRepository;
 import com.findbugs.findbugstaff.sse.SseEmitters;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class DetectionRegister {
     private final SseEmitters sseEmitters;
     private final MemberRepository memberRepository;
-
+    @Async
     public void bugDetection(BugDetectionRequestDto bugDetectionRequestDto) {
         System.out.println("MemberId: " + bugDetectionRequestDto.getMemberId());
         System.out.println("RecentFindTime: " + bugDetectionRequestDto.getRecentFindTime());
