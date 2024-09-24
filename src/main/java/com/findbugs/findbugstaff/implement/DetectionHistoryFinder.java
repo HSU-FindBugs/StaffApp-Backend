@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Slf4j
@@ -32,6 +31,10 @@ public class DetectionHistoryFinder {
     // 방문 처리 되지 않은 기록 모두를 조회하는 기능
     public List<DetectionHistory> findUnVisited(Long memberId) {
         return detectionHistoryRepository.findUnVisitedByMemberId(memberId);
+    }
+
+    public boolean existsUnVisited(Long memberId) {
+        return detectionHistoryRepository.existsVisitByMemberId(memberId);
     }
 
 

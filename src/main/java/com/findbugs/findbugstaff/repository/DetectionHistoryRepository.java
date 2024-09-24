@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DetectionHistoryRepository extends JpaRepository<DetectionHistory, Long> {
@@ -34,5 +33,10 @@ public interface DetectionHistoryRepository extends JpaRepository<DetectionHisto
     // 통계 : 특정 일자 벌레 발견 통계 조회
     @Query("select count(dh) from DetectionHistory dh where dh.bug.id = :bugId and dh.detectedAt = :date")
     Long countDetectedBugByLocalDate(@Param("bugId") Long id, @Param("date") LocalDateTime date);
+
+    // 방문 처리되지 않은 detectionHistory 조회
+    @Query("select case when count(dh) > 0 then true else false end "+
+            "from DetectionHistory dh where dh.member.id = :memberId and dh.visit is null")
+    boolean existsVisitByMemberId(@Param("memberId") Long memberId);
 
 }
