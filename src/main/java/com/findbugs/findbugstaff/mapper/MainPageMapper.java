@@ -5,6 +5,7 @@ import com.findbugs.findbugstaff.domain.Bug;
 import com.findbugs.findbugstaff.domain.Notification;
 import com.findbugs.findbugstaff.domain.Staff;
 import com.findbugs.findbugstaff.dto.MainPage.MainPageResponseDto;
+import com.findbugs.findbugstaff.dto.NotificationDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

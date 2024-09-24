@@ -18,5 +18,6 @@ public class NotificationDto {
     public String profileUrl;
     public String title;
     public String content;
+    public String time;
 
 }
