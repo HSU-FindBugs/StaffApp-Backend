@@ -18,7 +18,7 @@ import java.io.IOException;
 public class DetectionRegister {
     private final SseEmitters sseEmitters;
     private final MemberRepository memberRepository;
-    @Async
+    
     public void bugDetection(BugDetectionRequestDto bugDetectionRequestDto) {
         System.out.println("MemberId: " + bugDetectionRequestDto.getMemberId());
         System.out.println("RecentFindTime: " + bugDetectionRequestDto.getRecentFindTime());
