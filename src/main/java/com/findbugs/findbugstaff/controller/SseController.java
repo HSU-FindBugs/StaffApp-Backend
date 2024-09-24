@@ -20,7 +20,7 @@ public class SseController {
 
     @GetMapping(value = "/connect/{staffId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect(@PathVariable Long staffId) {
-        SseEmitter emitter = new SseEmitter();
+        SseEmitter emitter = new SseEmitter(2 * 24 * 60 * 60 * 1000L);
         sseEmitters.add(staffId, emitter); // staffId와 함께 emitter 추가
 
         try {
