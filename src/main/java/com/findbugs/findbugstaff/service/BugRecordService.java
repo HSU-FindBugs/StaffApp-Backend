@@ -17,9 +17,11 @@ public class BugRecordService {
     public BugRecordDto getBugRecord(Long detectionHistoryId){
         DetectionHistory detectionHistory = bugRecordFinder.getHistory(detectionHistoryId);
         String bugname =  detectionHistory.getBug().getName();
+        String bugUrl = detectionHistory.getBug().getBugImageUrl();
         String bugdescription = detectionHistory.getBug().getDescription();
         BugRecordDto bugRecordDto = BugRecordDto.builder().bugName(bugname)
                 .bugDescription(bugdescription)
+                .bugUrl(bugUrl)
                 .cameraId(detectionHistory.getCamera().getId())
                 .bugFindDate(detectionHistory.getDetectedAt().toLocalDate())
                 .bugFindTime(detectionHistory.getDetectedAt().toLocalTime())

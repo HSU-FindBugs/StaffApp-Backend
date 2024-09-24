@@ -28,6 +28,7 @@ public class Bug {
 
     private String description;
 
+    private String bugImageUrl;
     /*
     벌레 상세 정보는 NoSQL을 통해 관리
      */
